@@ -1,4 +1,6 @@
-package de.schwarzf.boco;
+package de.schwarzf.boco.minsk;
+
+import de.schwarzf.boco.slides.Semantic;
 
 import java.util.LinkedList;
 
@@ -35,5 +37,8 @@ public class SyntaxTree {
     }*/
     public SyntaxTree getChild(int i) {
         return this.childNodes.get(i);
+    }
+    public int getChildNumber() {
+        return this.childNodes.size();
     }
 }
