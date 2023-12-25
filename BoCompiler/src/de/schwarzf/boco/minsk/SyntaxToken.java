@@ -17,6 +17,7 @@ public class SyntaxToken {
         CloseParenthesis,
         Percent,
         Caret,
+        BinaryExpression,
         BadToken
     }
     private TokenType type;

@@ -34,4 +34,34 @@ public class Parser {
     private SyntaxToken getCurrent() {
         return getPeek(0);
     }
+
+    private SyntaxToken getNextToken() {
+        SyntaxToken current = getCurrent();
+        position++;
+        return current;
+    }
+
+    private SyntaxToken matchToken(SyntaxToken.TokenType type) {
+        if (getCurrent().getType() == type) {
+            return getNextToken();
+        }
+        return new SyntaxToken(type, getCurrent().getPosition(), null, null);
+    }
+
+    public ExpressionSyntax parse() {
+        ExpressionSyntax left = parsePrimaryExpression();
+
+        while (getCurrent().getType() == SyntaxToken.TokenType.Plus || getCurrent().getType() == SyntaxToken.TokenType.Minus) {
+            SyntaxToken operatorToken = getNextToken();
+            ExpressionSyntax right = parsePrimaryExpression();
+            left = new BinaryExpressionSyntax(left, operatorToken, right);
+        }
+
+        return left;
+    }
+
+    private ExpressionSyntax parsePrimaryExpression() {
+        SyntaxToken numberToken = matchToken(SyntaxToken.TokenType.Number);
+        return new NumberExpressionSyntax(numberToken);
+    }
 }

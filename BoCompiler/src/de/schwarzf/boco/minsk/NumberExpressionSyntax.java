@@ -1,26 +1,15 @@
 package de.schwarzf.boco.minsk;
 
 public final class NumberExpressionSyntax extends ExpressionSyntax {
-    private ExpressionSyntax left;
-    private SyntaxToken operatorToken;
-    private ExpressionSyntax right;
 
-    public NumberExpressionSyntax(ExpressionSyntax left, SyntaxToken operatorToken, ExpressionSyntax right) {
-        this.left = left;
-        this.operatorToken = operatorToken;
-        this.right = right;
+    private SyntaxToken numberToken;
+
+    public NumberExpressionSyntax(SyntaxToken numberToken){
+        this.numberToken = numberToken;
     }
 
-    public ExpressionSyntax getLeft() {
-        return left;
-    }
-
-    public SyntaxToken getOperatorToken() {
-        return operatorToken;
-    }
-
-    public ExpressionSyntax getRight() {
-        return right;
+    public SyntaxToken getNumberToken(){
+        return numberToken;
     }
 
     @Override
