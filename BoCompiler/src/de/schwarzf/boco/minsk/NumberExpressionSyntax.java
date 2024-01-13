@@ -1,5 +1,7 @@
 package de.schwarzf.boco.minsk;
 
+import java.util.Arrays;
+
 public final class NumberExpressionSyntax extends ExpressionSyntax {
 
     private SyntaxToken numberToken;
@@ -17,4 +19,9 @@ public final class NumberExpressionSyntax extends ExpressionSyntax {
         return SyntaxToken.TokenType.Number;
     }
 
+    @Override
+    public Iterable<SyntaxNode> getChildren() {
+        //return (Iterable<SyntaxNode>) numberToken;
+        return Arrays.asList(new SyntaxToken[]{numberToken});
+    }
 }

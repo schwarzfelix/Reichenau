@@ -1,6 +1,8 @@
 package de.schwarzf.boco;
 
 import de.schwarzf.boco.minsk.Lexer;
+import de.schwarzf.boco.minsk.Parser;
+import de.schwarzf.boco.minsk.SyntaxNode;
 import de.schwarzf.boco.minsk.SyntaxToken;
 
 public class Main {
@@ -15,7 +17,12 @@ public class Main {
         // print the scanned string
         System.out.println("Processing: " + input);
 
-        Lexer lexer = new Lexer(input);
+        Parser parser = new Parser(input);
+        SyntaxNode expression = parser.parse();
+
+        prettyPrint(expression, "");
+
+        /*Lexer lexer = new Lexer(input);
         while (true) {
             SyntaxToken token = lexer.nextToken();
             if (token.getType() == de.schwarzf.boco.minsk.SyntaxToken.TokenType.EOF) {
@@ -26,6 +33,21 @@ public class Main {
                 System.out.print( " value " + token.getValue());
             }
             System.out.println();
+        }*/
+    }
+
+    public static void prettyPrint(SyntaxNode node, String indent) {
+
+        System.out.println(node.getType() + ": " + node.toString());
+
+        if (node instanceof SyntaxToken && ((SyntaxToken) node).getValue() != null) {
+            System.out.println(indent + "Value: " + ((SyntaxToken) node).getValue());
+        }
+
+        indent += "    ";
+
+        for (SyntaxNode child : node.getChildren()) {
+            prettyPrint(child, indent);
         }
     }
 }

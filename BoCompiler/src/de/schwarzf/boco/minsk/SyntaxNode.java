@@ -1,6 +1,6 @@
 package de.schwarzf.boco.minsk;
 
-public class SyntaxNode {
+public abstract class SyntaxNode {
 
     private SyntaxToken.TokenType type;
 
@@ -8,4 +8,6 @@ public class SyntaxNode {
     public SyntaxToken.TokenType getType() {
         return type;
     }
+
+    public abstract Iterable<SyntaxNode> getChildren();
 }

@@ -14,4 +14,10 @@ public final class NumberSyntax extends ExpressionSyntax{
     public SyntaxToken getNumberToken(){
         return numberToken;
     }
+
+    @Override
+    public Iterable<SyntaxNode> getChildren() {
+        return (Iterable<SyntaxNode>) numberToken;
+        //generated code, not checked from source
+    }
 }

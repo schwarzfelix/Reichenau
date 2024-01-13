@@ -1,5 +1,7 @@
 package de.schwarzf.boco.minsk;
 
+import java.util.Arrays;
+
 public final class BinaryExpressionSyntax extends ExpressionSyntax {
 
     private ExpressionSyntax left;
@@ -36,5 +38,11 @@ public final class BinaryExpressionSyntax extends ExpressionSyntax {
                 ", operatorToken=" + operatorToken +
                 ", right=" + right +
                 '}';
+    }
+
+    @Override
+    public Iterable<SyntaxNode> getChildren() {
+        // return list of left, operator and right
+        return Arrays.asList(new SyntaxNode[]{left, operatorToken, right});
     }
 }

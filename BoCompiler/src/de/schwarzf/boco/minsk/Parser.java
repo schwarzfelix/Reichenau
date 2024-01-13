@@ -20,7 +20,9 @@ public class Parser {
             }
         } while (token.getType() != SyntaxToken.TokenType.EOF);
 
-        this.tokens = (SyntaxToken[]) tokensList.toArray();
+        this.tokens = new SyntaxToken[tokensList.size()];
+        this.tokens = (SyntaxToken[]) tokensList.toArray(this.tokens);
+
     }
 
     private SyntaxToken getPeek(int offset) {

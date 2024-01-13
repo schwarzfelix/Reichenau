@@ -3,7 +3,10 @@ package de.schwarzf.boco.minsk;
 
 import com.sun.org.apache.bcel.internal.generic.LineNumberGen;
 
-public class SyntaxToken {
+import java.util.Collection;
+import java.util.Collections;
+
+public class SyntaxToken extends SyntaxNode{
 
     public enum TokenType {
         EOF,
@@ -34,6 +37,11 @@ public class SyntaxToken {
 
     public TokenType getType() {
         return type;
+    }
+
+    @Override
+    public Iterable<SyntaxNode> getChildren() {
+        return Collections.emptyList();
     }
 
     public int getPosition() {
