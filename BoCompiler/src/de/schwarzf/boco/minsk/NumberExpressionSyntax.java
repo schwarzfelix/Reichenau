@@ -16,7 +16,7 @@ public final class NumberExpressionSyntax extends ExpressionSyntax {
 
     @Override
     public SyntaxToken.TokenType getType() {
-        return SyntaxToken.TokenType.Number;
+        return SyntaxToken.TokenType.NumberExpression;
     }
 
     @Override

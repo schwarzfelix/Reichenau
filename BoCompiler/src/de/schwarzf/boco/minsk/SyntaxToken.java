@@ -10,7 +10,7 @@ public class SyntaxToken extends SyntaxNode{
 
     public enum TokenType {
         EOF,
-        Number,
+        NumberToken,
         Whitespace,
         Plus,
         Minus,
@@ -21,6 +21,7 @@ public class SyntaxToken extends SyntaxNode{
         Percent,
         Caret,
         BinaryExpression,
+        NumberExpression,
         BadToken
     }
     private TokenType type;

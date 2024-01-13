@@ -5,6 +5,8 @@ import de.schwarzf.boco.minsk.Parser;
 import de.schwarzf.boco.minsk.SyntaxNode;
 import de.schwarzf.boco.minsk.SyntaxToken;
 
+import java.io.Console;
+
 public class Main {
     public static void main(String[] args) {
         System.out.println("BoCo: SchwarzF's BoCompiler for the BoCode Programming Language");
@@ -38,11 +40,14 @@ public class Main {
 
     public static void prettyPrint(SyntaxNode node, String indent) {
 
-        System.out.println(node.getType() + ": " + node.toString());
+        System.out.print(indent + node.getType());
+        //System.out.println(node.getType() + ": " + node.toString());
 
         if (node instanceof SyntaxToken && ((SyntaxToken) node).getValue() != null) {
-            System.out.println(indent + "Value: " + ((SyntaxToken) node).getValue());
+            System.out.print(" = " + ((SyntaxToken) node).getValue());
         }
+
+        System.out.println();
 
         indent += "    ";
 

@@ -63,7 +63,7 @@ public class Parser {
     }
 
     private ExpressionSyntax parsePrimaryExpression() {
-        SyntaxToken numberToken = matchToken(SyntaxToken.TokenType.Number);
+        SyntaxToken numberToken = matchToken(SyntaxToken.TokenType.NumberToken);
         return new NumberExpressionSyntax(numberToken);
     }
 }

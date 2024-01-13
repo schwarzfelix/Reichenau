@@ -44,7 +44,7 @@ public class Lexer {
             }
             int length = position - start;
             String text = this.text.substring(start, start + length);
-            return new SyntaxToken(TokenType.Number, start, text, Integer.parseInt(text));
+            return new SyntaxToken(TokenType.NumberToken, start, text, Integer.parseInt(text));
         }
 
         // whitespace and newlines
