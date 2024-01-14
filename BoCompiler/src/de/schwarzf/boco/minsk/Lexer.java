@@ -4,6 +4,7 @@ package de.schwarzf.boco.minsk;
 
 import de.schwarzf.boco.minsk.SyntaxToken.TokenType;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Arrays;
@@ -13,9 +14,14 @@ public class Lexer {
 
     private String text;
     private int position;
+    private ArrayList<String> diagnostics = new ArrayList<>();
 
     public Lexer (String text) {
         this.text = text;
+    }
+
+    public ArrayList<String> getDiagnostics() {
+        return diagnostics;
     }
 
     private char getCurrent(){
