@@ -96,6 +96,7 @@ public class Lexer {
             return new SyntaxToken(TokenType.Caret, position++, "^", null);
         }
 
+        diagnostics.add(String.format("ERROR: bad character input: '%s'", getCurrent()));
         return new SyntaxToken(TokenType.BadToken, position++, text.substring(position - 1, 1), null);
     }
 }
