@@ -6,6 +6,7 @@ public class Parser {
 
     private SyntaxToken[] tokens;
     private int position;
+    private ArrayList<String> diagnostics = new ArrayList<>();
 
     public Parser(String text) {
         ArrayList<SyntaxToken> tokensList = new ArrayList<>();
@@ -23,6 +24,11 @@ public class Parser {
         this.tokens = new SyntaxToken[tokensList.size()];
         this.tokens = (SyntaxToken[]) tokensList.toArray(this.tokens);
 
+        this.diagnostics.addAll(lexer.getDiagnostics());
+    }
+
+    public ArrayList<String> getDiagnostics() {
+        return this.diagnostics;
     }
 
     private SyntaxToken getPeek(int offset) {
@@ -47,6 +53,7 @@ public class Parser {
         if (getCurrent().getType() == type) {
             return getNextToken();
         }
+        this.diagnostics.add("ERROR: Unexpected token <" + getCurrent().getType() + ">, expected <" + type + ">");
         return new SyntaxToken(type, getCurrent().getPosition(), null, null);
     }
 

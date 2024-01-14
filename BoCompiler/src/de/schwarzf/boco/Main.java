@@ -24,6 +24,13 @@ public class Main {
 
         prettyPrint(expression, "");
 
+        if (parser.getDiagnostics().size() > 0) {
+            for (String diagnostic : parser.getDiagnostics()) {
+                System.out.println(diagnostic);
+            }
+        }
+
+        // now lexer is called from parser
         /*Lexer lexer = new Lexer(input);
         while (true) {
             SyntaxToken token = lexer.nextToken();
