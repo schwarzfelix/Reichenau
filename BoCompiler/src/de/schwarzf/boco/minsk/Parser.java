@@ -19,7 +19,7 @@ public class Parser {
             if (token.getType() != SyntaxToken.TokenType.Whitespace && token.getType() != SyntaxToken.TokenType.BadToken) {
                 tokensList.add(token);
             }
-        } while (token.getType() != SyntaxToken.TokenType.EOF);
+        } while (token.getType() != SyntaxToken.TokenType.EndOfFileToken);
 
         this.tokens = new SyntaxToken[tokensList.size()];
         this.tokens = (SyntaxToken[]) tokensList.toArray(this.tokens);

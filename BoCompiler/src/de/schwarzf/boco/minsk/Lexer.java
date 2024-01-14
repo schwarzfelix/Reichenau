@@ -38,7 +38,7 @@ public class Lexer {
     public SyntaxToken nextToken(){
 
         if (position >= text.length() || getCurrent() == '\0') {
-            return new SyntaxToken(TokenType.EOF, position, "\0", null);
+            return new SyntaxToken(TokenType.EndOfFileToken, position, "\0", null);
         }
 
         Set<Character> digits = new HashSet<>();

@@ -9,7 +9,7 @@ import java.util.Collections;
 public class SyntaxToken extends SyntaxNode{
 
     public enum TokenType {
-        EOF,
+        EndOfFileToken,
         NumberToken,
         Whitespace,
         Plus,
