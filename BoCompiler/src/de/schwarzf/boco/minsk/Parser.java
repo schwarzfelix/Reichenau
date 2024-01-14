@@ -53,7 +53,7 @@ public class Parser {
         if (getCurrent().getType() == type) {
             return getNextToken();
         }
-        this.diagnostics.add("ERROR: Unexpected token <" + getCurrent().getType() + ">, expected <" + type + ">");
+        this.diagnostics.add("PARSER ERROR: Unexpected token <" + getCurrent().getType() + ">, expected <" + type + ">");
         return new SyntaxToken(type, getCurrent().getPosition(), null, null);
     }
 
