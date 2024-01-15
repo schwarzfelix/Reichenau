@@ -1,44 +1,24 @@
 package de.schwarzf.boco.minsk;
 
-import de.schwarzf.boco.slides.Semantic;
+import java.util.ArrayList;
 
-import java.util.LinkedList;
-
-public class SyntaxTree {
-    private LinkedList<SyntaxTree> childNodes;
-    private byte token;
-    private char character;
-    public Semantic value;
-
-    public SyntaxTree(byte token) {
-        this.token = token;
-        /*this.childNodes = new LinkedList<SyntaxTree>();*/
+public final class SyntaxTree {
+    private SyntaxNode root;
+    private SyntaxToken endOfFileToken;
+    private String[] diagnostics;
+    public SyntaxTree(ArrayList<String> diagonstics, SyntaxNode root, SyntaxToken endOfFileToken) {
+        this.root = root;
+        this.endOfFileToken = endOfFileToken;
+        this.diagnostics = new String[diagonstics.size()];
+        this.diagnostics = diagonstics.toArray(this.diagnostics);
     }
-
-    public void setToken(byte token) {
-        this.token = token;
+    public SyntaxNode getRoot() {
+        return root;
     }
-    public byte getToken() {
-        return this.token;
+    public SyntaxToken getEndOfFileToken() {
+        return endOfFileToken;
     }
-    public void setCharacter(char character) {
-        this.character = character;
-    }
-    public char getCharacter() {
-        return this.character;
-    }
-    public void setSemantic(Semantic value) {
-        this.value = value;
-    }
-    /*public SyntaxTree insertSubtree(byte b) {
-        SyntaxTree t = new SyntaxTree(b);
-        this.childNodes.add(t);
-        return t;
-    }*/
-    public SyntaxTree getChild(int i) {
-        return this.childNodes.get(i);
-    }
-    public int getChildNumber() {
-        return this.childNodes.size();
+    public String[] getDiagnostics() {
+        return diagnostics;
     }
 }

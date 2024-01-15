@@ -1,7 +1,5 @@
 package de.schwarzf.boco.slides;
 
-import de.schwarzf.boco.minsk.SyntaxTree;
-
 public class Num extends Semantic {
     public int f(SyntaxTree t, int n) {
         if (t.getChildNumber() == 2) {

@@ -1,7 +1,5 @@
 package de.schwarzf.boco.slides;
 
-import de.schwarzf.boco.minsk.SyntaxTree;
-
 public class Digit extends Semantic {
     public int f(SyntaxTree t, int n) {
         SyntaxTree symbol = t.getChild(0);
