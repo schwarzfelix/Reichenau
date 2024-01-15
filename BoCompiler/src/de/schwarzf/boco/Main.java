@@ -1,6 +1,5 @@
 package de.schwarzf.boco;
 
-import de.schwarzf.boco.minsk.Lexer;
 import de.schwarzf.boco.minsk.Parser;
 import de.schwarzf.boco.minsk.SyntaxNode;
 import de.schwarzf.boco.minsk.SyntaxToken;
@@ -29,20 +28,6 @@ public class Main {
                 System.out.println(diagnostic);
             }
         }
-
-        // now lexer is called from parser
-        /*Lexer lexer = new Lexer(input);
-        while (true) {
-            SyntaxToken token = lexer.nextToken();
-            if (token.getType() == de.schwarzf.boco.minsk.SyntaxToken.TokenType.EOF) {
-                break;
-            }
-            System.out.print(token.getType() + ": " + token.getText());
-            if (token.getValue() != null) {
-                System.out.print( " value " + token.getValue());
-            }
-            System.out.println();
-        }*/
     }
 
     public static void prettyPrint(SyntaxNode node, String indent) {
