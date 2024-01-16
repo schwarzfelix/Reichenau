@@ -9,24 +9,25 @@ import java.io.Console;
 public class Main {
     public static void main(String[] args) {
         System.out.println("BoCo: SchwarzF's BoCompiler for the BoCode Programming Language");
-        System.out.print("Expression> ");
+        while (true) {
 
-        // read input from console
-        java.util.Scanner scanner = new java.util.Scanner(System.in);
-        String input = scanner.nextLine();
+            System.out.println("―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――");
+            System.out.print("Expression> ");
 
-        // print the scanned string
-        System.out.println("Processing: " + input);
+            java.util.Scanner scanner = new java.util.Scanner(System.in);
+            String input = scanner.nextLine();
 
-        Parser parser = new Parser(input);
-        SyntaxNode expression = parser.parse();
+            Parser parser = new Parser(input);
+            SyntaxNode expression = parser.parse();
 
-        prettyPrint(expression, "");
+            prettyPrint(expression, "");
 
-        if (parser.getDiagnostics().size() > 0) {
-            for (String diagnostic : parser.getDiagnostics()) {
-                System.out.println(diagnostic);
+            if (parser.getDiagnostics().size() > 0) {
+                for (String diagnostic : parser.getDiagnostics()) {
+                    System.out.println(diagnostic);
+                }
             }
+
         }
     }
 
