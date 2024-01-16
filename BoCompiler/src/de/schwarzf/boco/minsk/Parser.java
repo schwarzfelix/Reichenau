@@ -16,10 +16,10 @@ public class Parser {
         do {
             token = lexer.nextToken();
 
-            if (token.getType() != SyntaxToken.TokenType.Whitespace && token.getType() != SyntaxToken.TokenType.BadToken) {
+            if (token.getType() != SyntaxToken.SyntaxKind.Whitespace && token.getType() != SyntaxToken.SyntaxKind.BadToken) {
                 tokensList.add(token);
             }
-        } while (token.getType() != SyntaxToken.TokenType.EndOfFileToken);
+        } while (token.getType() != SyntaxToken.SyntaxKind.EndOfFileToken);
 
         this.tokens = new SyntaxToken[tokensList.size()];
         this.tokens = (SyntaxToken[]) tokensList.toArray(this.tokens);
@@ -49,7 +49,7 @@ public class Parser {
         return current;
     }
 
-    private SyntaxToken matchToken(SyntaxToken.TokenType type) {
+    private SyntaxToken matchToken(SyntaxToken.SyntaxKind type) {
         if (getCurrent().getType() == type) {
             return getNextToken();
         }
@@ -60,7 +60,7 @@ public class Parser {
     public ExpressionSyntax parse() {
         ExpressionSyntax left = parsePrimaryExpression();
 
-        while (getCurrent().getType() == SyntaxToken.TokenType.Plus || getCurrent().getType() == SyntaxToken.TokenType.Minus) {
+        while (getCurrent().getType() == SyntaxToken.SyntaxKind.PlusToken || getCurrent().getType() == SyntaxToken.SyntaxKind.MinusToken) {
             SyntaxToken operatorToken = getNextToken();
             ExpressionSyntax right = parsePrimaryExpression();
             left = new BinaryExpressionSyntax(left, operatorToken, right);
@@ -70,7 +70,7 @@ public class Parser {
     }
 
     private ExpressionSyntax parsePrimaryExpression() {
-        SyntaxToken numberToken = matchToken(SyntaxToken.TokenType.NumberToken);
+        SyntaxToken numberToken = matchToken(SyntaxToken.SyntaxKind.NumberToken);
         return new NumberExpressionSyntax(numberToken);
     }
 }

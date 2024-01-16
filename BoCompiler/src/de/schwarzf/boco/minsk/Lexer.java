@@ -2,7 +2,7 @@ package de.schwarzf.boco.minsk;
 
 // https://www.youtube.com/watch?v=wgHIkdUQbp0&list=PLRAdsfhKI4OWNOSfS7EUu5GRAVmze1t2y
 
-import de.schwarzf.boco.minsk.SyntaxToken.TokenType;
+import de.schwarzf.boco.minsk.SyntaxToken.SyntaxKind;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -38,7 +38,7 @@ public class Lexer {
     public SyntaxToken nextToken(){
 
         if (position >= text.length() || getCurrent() == '\0') {
-            return new SyntaxToken(TokenType.EndOfFileToken, position, "\0", null);
+            return new SyntaxToken(SyntaxKind.EndOfFileToken, position, "\0", null);
         }
 
         Set<Character> digits = new HashSet<>();
@@ -50,7 +50,7 @@ public class Lexer {
             }
             int length = position - start;
             String text = this.text.substring(start, start + length);
-            return new SyntaxToken(TokenType.NumberToken, start, text, Integer.parseInt(text));
+            return new SyntaxToken(SyntaxKind.NumberToken, start, text, Integer.parseInt(text));
         }
 
         // whitespace and newlines
@@ -61,42 +61,34 @@ public class Lexer {
             }
             int length = position - start;
             String text = this.text.substring(start, start + length);
-            return new SyntaxToken(TokenType.Whitespace, start, text, null);
+            return new SyntaxToken(SyntaxKind.Whitespace, start, text, null);
         }
 
         if (getCurrent() == '+') {
-            return new SyntaxToken(TokenType.Plus, position++, "+", null);
+            return new SyntaxToken(SyntaxKind.PlusToken, position++, "+", null);
         }
 
         if (getCurrent() == '-') {
-            return new SyntaxToken(TokenType.Minus, position++, "-", null);
+            return new SyntaxToken(SyntaxKind.MinusToken, position++, "-", null);
         }
 
         if (getCurrent() == '*') {
-            return new SyntaxToken(TokenType.Star, position++, "*", null);
+            return new SyntaxToken(SyntaxKind.StarToken, position++, "*", null);
         }
 
         if (getCurrent() == '/') {
-            return new SyntaxToken(TokenType.Slash, position++, "/", null);
+            return new SyntaxToken(SyntaxKind.SlashToken, position++, "/", null);
         }
 
         if (getCurrent() == '(') {
-            return new SyntaxToken(TokenType.OpenParenthesis, position++, "(", null);
+            return new SyntaxToken(SyntaxKind.OpenParenthesisToken, position++, "(", null);
         }
 
         if (getCurrent() == ')') {
-            return new SyntaxToken(TokenType.CloseParenthesis, position++, ")", null);
-        }
-
-        if (getCurrent() == '%') {
-            return new SyntaxToken(TokenType.Percent, position++, "%", null);
-        }
-
-        if (getCurrent() == '^') {
-            return new SyntaxToken(TokenType.Caret, position++, "^", null);
+            return new SyntaxToken(SyntaxKind.CloseParenthesisToken, position++, ")", null);
         }
 
         this.diagnostics.add(String.format("LEXER ERROR: Bad character input: '%s'", getCurrent()));
-        return new SyntaxToken(TokenType.BadToken, position++, text.substring(position -1, position), null);
+        return new SyntaxToken(SyntaxKind.BadToken, position++, text.substring(position -1, position), null);
     }
 }

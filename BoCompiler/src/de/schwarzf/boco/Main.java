@@ -4,8 +4,6 @@ import de.schwarzf.boco.minsk.Parser;
 import de.schwarzf.boco.minsk.SyntaxNode;
 import de.schwarzf.boco.minsk.SyntaxToken;
 
-import java.io.Console;
-
 public class Main {
 
     public static final String ANSI_RESET = "\u001B[0m";
@@ -17,7 +15,6 @@ public class Main {
     public static final String ANSI_PURPLE = "\u001B[35m";
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
-
     public static final String ANSI_BLACK_BACKGROUND = "\u001B[40m";
     public static final String ANSI_RED_BACKGROUND = "\u001B[41m";
     public static final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
@@ -54,7 +51,6 @@ public class Main {
     public static void prettyPrint(SyntaxNode node, String indent) {
 
         System.out.print(indent + node.getType());
-        //System.out.println(node.getType() + ": " + node.toString());
 
         if (node instanceof SyntaxToken && ((SyntaxToken) node).getValue() != null) {
             System.out.print(" = " + ((SyntaxToken) node).getValue());

@@ -1,42 +1,44 @@
 package de.schwarzf.boco.minsk;
 
 
-import com.sun.org.apache.bcel.internal.generic.LineNumberGen;
-
-import java.util.Collection;
 import java.util.Collections;
 
 public class SyntaxToken extends SyntaxNode{
 
-    public enum TokenType {
-        EndOfFileToken,
-        NumberToken,
-        Whitespace,
-        Plus,
-        Minus,
-        Star,
-        Slash,
-        OpenParenthesis,
-        CloseParenthesis,
-        Percent,
-        Caret,
-        BinaryExpression,
-        NumberExpression,
-        BadToken
+    public enum SyntaxKind {
+
+        //Tokens
+            NumberToken,
+            PlusToken,
+            MinusToken,
+            StarToken,
+            SlashToken,
+
+        //Expressions
+            BinaryExpression,
+            NumberExpression,
+            OpenParenthesisToken,
+            CloseParenthesisToken,
+
+        //Other
+            Whitespace,
+            EndOfFileToken,
+            BadToken
+
     }
-    private TokenType type;
+    private SyntaxKind type;
     private int position;
     private String text;
 
     private Integer value;
-    public SyntaxToken(TokenType type, int position, String text, Integer value){
+    public SyntaxToken(SyntaxKind type, int position, String text, Integer value){
         this.type = type;
         this.position = position;
         this.text = text;
         this.value = value;
     }
 
-    public TokenType getType() {
+    public SyntaxKind getType() {
         return type;
     }
 
