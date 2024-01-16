@@ -5,27 +5,6 @@ import java.util.Collections;
 
 public class SyntaxToken extends SyntaxNode{
 
-    public enum SyntaxKind {
-
-        //Tokens
-            NumberToken,
-            PlusToken,
-            MinusToken,
-            StarToken,
-            SlashToken,
-
-        //Expressions
-            BinaryExpression,
-            NumberExpression,
-            OpenParenthesisToken,
-            CloseParenthesisToken,
-
-        //Other
-            Whitespace,
-            EndOfFileToken,
-            BadToken
-
-    }
     private SyntaxKind type;
     private int position;
     private String text;

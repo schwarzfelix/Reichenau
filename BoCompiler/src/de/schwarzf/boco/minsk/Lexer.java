@@ -2,8 +2,6 @@ package de.schwarzf.boco.minsk;
 
 // https://www.youtube.com/watch?v=wgHIkdUQbp0&list=PLRAdsfhKI4OWNOSfS7EUu5GRAVmze1t2y
 
-import de.schwarzf.boco.minsk.SyntaxToken.SyntaxKind;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;

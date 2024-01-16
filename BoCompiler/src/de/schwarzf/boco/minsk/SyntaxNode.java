@@ -2,10 +2,10 @@ package de.schwarzf.boco.minsk;
 
 public abstract class SyntaxNode {
 
-    private SyntaxToken.SyntaxKind type;
+    private SyntaxKind type;
 
 
-    public SyntaxToken.SyntaxKind getType() {
+    public SyntaxKind getType() {
         return type;
     }
 

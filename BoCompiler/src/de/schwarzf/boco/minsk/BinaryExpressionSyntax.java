@@ -27,8 +27,8 @@ public final class BinaryExpressionSyntax extends ExpressionSyntax {
     }
 
     @Override
-    public SyntaxToken.SyntaxKind getType() {
-        return SyntaxToken.SyntaxKind.BinaryExpression;
+    public SyntaxKind getType() {
+        return SyntaxKind.BinaryExpression;
     }
 
     @Override

@@ -7,8 +7,8 @@ public final class NumberSyntax extends ExpressionSyntax{
     }
 
     @Override
-    public SyntaxToken.SyntaxKind getType() {
-        return SyntaxToken.SyntaxKind.NumberToken;
+    public SyntaxKind getType() {
+        return SyntaxKind.NumberToken;
     }
 
     public SyntaxToken getNumberToken(){
