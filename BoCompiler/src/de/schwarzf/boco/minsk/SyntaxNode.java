@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 public abstract class SyntaxNode {
 
-    private SyntaxKind type;
+    private SyntaxKind kind;
 
 
-    public SyntaxKind getType() {
-        return type;
+    public SyntaxKind getKind() {
+        return kind;
     }
 
     public abstract Iterable<SyntaxNode> getChildren();

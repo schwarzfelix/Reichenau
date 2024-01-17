@@ -52,7 +52,7 @@ public class Main {
 
         String marker = isLast ? "└──" : "├──";
 
-        System.out.print(indent + marker + node.getType());
+        System.out.print(indent + marker + node.getKind());
 
         if (node instanceof SyntaxToken && ((SyntaxToken) node).getValue() != null) {
             System.out.print(" = " + ((SyntaxToken) node).getValue());

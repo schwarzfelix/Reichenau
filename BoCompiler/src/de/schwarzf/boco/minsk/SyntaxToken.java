@@ -5,20 +5,20 @@ import java.util.Collections;
 
 public class SyntaxToken extends SyntaxNode{
 
-    private SyntaxKind type;
+    private SyntaxKind kind;
     private int position;
     private String text;
 
     private Integer value;
-    public SyntaxToken(SyntaxKind type, int position, String text, Integer value){
-        this.type = type;
+    public SyntaxToken(SyntaxKind kind, int position, String text, Integer value){
+        this.kind = kind;
         this.position = position;
         this.text = text;
         this.value = value;
     }
 
-    public SyntaxKind getType() {
-        return type;
+    public SyntaxKind getKind() {
+        return kind;
     }
 
     @Override
