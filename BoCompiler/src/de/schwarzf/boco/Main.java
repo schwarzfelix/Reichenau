@@ -37,7 +37,7 @@ public class Main {
             Parser parser = new Parser(input);
             SyntaxNode expression = parser.parse();
 
-            prettyPrint(expression, "");
+            prettyPrint(expression, "", true);
 
             if (parser.getDiagnostics().size() > 0) {
                 for (String diagnostic : parser.getDiagnostics()) {
@@ -48,9 +48,11 @@ public class Main {
         }
     }
 
-    public static void prettyPrint(SyntaxNode node, String indent) {
+    public static void prettyPrint(SyntaxNode node, String indent, boolean isLast) {
 
-        System.out.print(indent + node.getType());
+        String marker = isLast ? "└──" : "├──";
+
+        System.out.print(indent + marker + node.getType());
 
         if (node instanceof SyntaxToken && ((SyntaxToken) node).getValue() != null) {
             System.out.print(" = " + ((SyntaxToken) node).getValue());
@@ -58,10 +60,16 @@ public class Main {
 
         System.out.println();
 
-        indent += "    ";
+        indent += isLast ? "    " : "│   ";
+
+        // get last child of node
+        SyntaxNode lastChild = null;
+        for (SyntaxNode element : node.getChildren()) {
+            lastChild = element;
+        }
 
         for (SyntaxNode child : node.getChildren()) {
-            prettyPrint(child, indent);
+            prettyPrint(child, indent, child == lastChild);
         }
     }
 }
