@@ -21,4 +21,9 @@ public final class SyntaxTree {
     public String[] getDiagnostics() {
         return diagnostics;
     }
+
+    public static SyntaxTree parse(String text) {
+        Parser parser = new Parser(text);
+        return parser.parse();
+    }
 }

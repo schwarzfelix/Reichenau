@@ -30,10 +30,9 @@ public class Main {
             System.out.print("Expression> ");
 
             java.util.Scanner scanner = new java.util.Scanner(System.in);
-            String input = scanner.nextLine();
+            String line = scanner.nextLine();
 
-            Parser parser = new Parser(input);
-            SyntaxTree syntaxTree = parser.parse();
+            SyntaxTree syntaxTree = SyntaxTree.parse(line);
 
             prettyPrint(syntaxTree.getRoot(), "", true);
 
@@ -47,7 +46,7 @@ public class Main {
                 int result = evaluator.evaluate();
                 System.out.println("Result: " + ANSI_GREEN + result + ANSI_RESET);
             }
-            
+
         }
     }
 
