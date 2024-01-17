@@ -58,7 +58,7 @@ final class Parser {
     }
 
     public SyntaxTree parse() {
-        ExpressionSyntax expression =  parseTerm();
+        ExpressionSyntax expression =  parseExpression();
         SyntaxToken endOfFileToken = matchToken(SyntaxKind.EndOfFileToken);
         return new SyntaxTree(this.diagnostics, expression, endOfFileToken);
     }
@@ -112,6 +112,6 @@ final class Parser {
         }
 
         SyntaxToken numberToken = matchToken(SyntaxKind.NumberToken);
-        return new NumberExpressionSyntax(numberToken);
+        return new LiteralExpressionSyntax(numberToken);
     }
 }

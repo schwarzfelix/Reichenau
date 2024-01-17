@@ -10,9 +10,9 @@ public final class Evaluator {
     }
     private int evaluateExpression(ExpressionSyntax node) {
 
-        if (node instanceof NumberExpressionSyntax) {
-            NumberExpressionSyntax n = (NumberExpressionSyntax)node;
-            return n.getNumberToken().getValue();
+        if (node instanceof LiteralExpressionSyntax) {
+            LiteralExpressionSyntax n = (LiteralExpressionSyntax)node;
+            return n.getLiteralToken().getValue();
         }
 
         if (node instanceof BinaryExpressionSyntax) {

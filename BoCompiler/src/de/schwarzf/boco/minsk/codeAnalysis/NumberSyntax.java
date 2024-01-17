@@ -1,5 +1,7 @@
 package de.schwarzf.boco.minsk.codeAnalysis;
 
+import java.util.Arrays;
+
 public final class NumberSyntax extends ExpressionSyntax {
     private SyntaxToken numberToken;
     public NumberSyntax(SyntaxToken token){
@@ -17,7 +19,6 @@ public final class NumberSyntax extends ExpressionSyntax {
 
     @Override
     public Iterable<SyntaxNode> getChildren() {
-        return (Iterable<SyntaxNode>) numberToken;
-        //generated code, not checked from source
+        return Arrays.asList(new SyntaxToken[]{numberToken});
     }
 }
