@@ -33,7 +33,8 @@ final class Lexer {
         position++;
     }
 
-    public SyntaxToken nextToken(){
+    // nextToken()/lex() is the heart of the lexer
+    public SyntaxToken lex(){
 
         if (position >= text.length() || getCurrent() == '\0') {
             return new SyntaxToken(SyntaxKind.EndOfFileToken, position, "\0", null);
@@ -71,28 +72,19 @@ final class Lexer {
             return new SyntaxToken(SyntaxKind.Whitespace, start, text, null);
         }
 
-        if (getCurrent() == '+') {
-            return new SyntaxToken(SyntaxKind.PlusToken, position++, "+", null);
-        }
-
-        if (getCurrent() == '-') {
-            return new SyntaxToken(SyntaxKind.MinusToken, position++, "-", null);
-        }
-
-        if (getCurrent() == '*') {
-            return new SyntaxToken(SyntaxKind.StarToken, position++, "*", null);
-        }
-
-        if (getCurrent() == '/') {
-            return new SyntaxToken(SyntaxKind.SlashToken, position++, "/", null);
-        }
-
-        if (getCurrent() == '(') {
-            return new SyntaxToken(SyntaxKind.OpenParenthesisToken, position++, "(", null);
-        }
-
-        if (getCurrent() == ')') {
-            return new SyntaxToken(SyntaxKind.CloseParenthesisToken, position++, ")", null);
+        switch (getCurrent()) {
+            case '+':
+                return new SyntaxToken(SyntaxKind.PlusToken, position++, "+", null);
+            case '-':
+                return new SyntaxToken(SyntaxKind.MinusToken, position++, "-", null);
+            case '*':
+                return new SyntaxToken(SyntaxKind.StarToken, position++, "*", null);
+            case '/':
+                return new SyntaxToken(SyntaxKind.SlashToken, position++, "/", null);
+            case '(':
+                return new SyntaxToken(SyntaxKind.OpenParenthesisToken, position++, "(", null);
+            case ')':
+                return new SyntaxToken(SyntaxKind.CloseParenthesisToken, position++, ")", null);
         }
 
         this.diagnostics.add(String.format("LEXER ERROR: Bad character input: '%s'", getCurrent()));

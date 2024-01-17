@@ -14,7 +14,7 @@ final class Parser {
         Lexer lexer = new Lexer(text);
         SyntaxToken token;
         do {
-            token = lexer.nextToken();
+            token = lexer.lex();
 
             if (token.getKind() != SyntaxKind.Whitespace && token.getKind() != SyntaxKind.BadToken) {
                 tokensList.add(token);
