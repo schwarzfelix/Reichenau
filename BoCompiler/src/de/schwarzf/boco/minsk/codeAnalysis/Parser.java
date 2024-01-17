@@ -2,7 +2,7 @@ package de.schwarzf.boco.minsk.codeAnalysis;
 
 import java.util.ArrayList;
 
-public class Parser {
+final class Parser {
 
     private SyntaxToken[] tokens;
     private int position;

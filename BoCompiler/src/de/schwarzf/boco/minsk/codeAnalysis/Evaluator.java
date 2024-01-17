@@ -1,6 +1,6 @@
 package de.schwarzf.boco.minsk.codeAnalysis;
 
-public class Evaluator {
+public final class Evaluator {
     ExpressionSyntax root;
     public Evaluator(ExpressionSyntax root) {
         this.root = root;

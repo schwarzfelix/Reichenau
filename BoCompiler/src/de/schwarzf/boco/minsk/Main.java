@@ -81,7 +81,7 @@ public class Main {
 
         System.out.println();
 
-        indent += isLast ? "    " : "│   ";
+        indent += isLast ? "   " : "│  ";
 
         // get last child of node
         SyntaxNode lastChild = null;

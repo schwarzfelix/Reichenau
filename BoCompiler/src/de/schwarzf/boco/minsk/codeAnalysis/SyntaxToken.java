@@ -3,7 +3,7 @@ package de.schwarzf.boco.minsk.codeAnalysis;
 
 import java.util.Collections;
 
-public class SyntaxToken extends SyntaxNode{
+public final class SyntaxToken extends SyntaxNode{
 
     private SyntaxKind kind;
     private int position;

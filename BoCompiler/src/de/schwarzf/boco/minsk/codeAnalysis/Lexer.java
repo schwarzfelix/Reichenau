@@ -8,7 +8,7 @@ import java.util.Set;
 import java.util.Arrays;
 
 
-public class Lexer {
+final class Lexer {
 
     private String text;
     private int position;
