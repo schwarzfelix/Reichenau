@@ -11,10 +11,12 @@ public class Evaluator {
         return evaluateExpression(this.root);
     }
     private int evaluateExpression(ExpressionSyntax node) {
+
         if (node instanceof NumberExpressionSyntax) {
             NumberExpressionSyntax n = (NumberExpressionSyntax)node;
             return n.getNumberToken().getValue();
         }
+
         if (node instanceof BinaryExpressionSyntax) {
             BinaryExpressionSyntax b = (BinaryExpressionSyntax)node;
 
@@ -37,6 +39,12 @@ public class Evaluator {
                 throw new IllegalArgumentException("Unexpected binary operator <" + b.getOperatorToken().getKind() + ">");
             }
         }
+
+        if (node instanceof ParenthesizedExpressionSyntax) {
+            ParenthesizedExpressionSyntax p = (ParenthesizedExpressionSyntax)node;
+            return evaluateExpression(p.getExpression());
+        }
+
         throw new IllegalArgumentException("Unexpected node <" + node.getKind() + ">");
     }
 }

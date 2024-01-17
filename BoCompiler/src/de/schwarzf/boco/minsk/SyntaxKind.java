@@ -18,6 +18,6 @@ public enum SyntaxKind {
     //Other
     Whitespace,
     EndOfFileToken,
-    BadToken
+    ParenthesizedExpression, BadToken
 
 }

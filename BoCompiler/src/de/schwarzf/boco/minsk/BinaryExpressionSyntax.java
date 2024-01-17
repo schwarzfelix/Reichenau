@@ -32,17 +32,7 @@ public final class BinaryExpressionSyntax extends ExpressionSyntax {
     }
 
     @Override
-    public String toString() {
-        return "BinaryExpressionSyntax{" +
-                "left=" + left +
-                ", operatorToken=" + operatorToken +
-                ", right=" + right +
-                '}';
-    }
-
-    @Override
     public Iterable<SyntaxNode> getChildren() {
-        // return list of left, operator and right
         return Arrays.asList(new SyntaxNode[]{left, operatorToken, right});
     }
 }

@@ -63,6 +63,10 @@ public class Parser {
         return new SyntaxTree(this.diagnostics, expression, endOfFileToken);
     }
 
+    private ExpressionSyntax parseExpression() {
+        return parseTerm();
+    }
+
     private ExpressionSyntax parseTerm() {
 
         ExpressionSyntax left = parseFactor();
@@ -97,6 +101,16 @@ public class Parser {
     }
 
     private ExpressionSyntax parsePrimaryExpression() {
+
+        if (getCurrent().getKind() == SyntaxKind.OpenParenthesisToken) {
+
+            SyntaxToken left = getNextToken();
+            ExpressionSyntax expression = parseExpression();
+            SyntaxToken right = matchToken(SyntaxKind.CloseParenthesisToken);
+
+            return new ParenthesizedExpressionSyntax(left, expression, right);
+        }
+
         SyntaxToken numberToken = matchToken(SyntaxKind.NumberToken);
         return new NumberExpressionSyntax(numberToken);
     }
