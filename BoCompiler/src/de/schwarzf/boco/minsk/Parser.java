@@ -66,7 +66,12 @@ public class Parser {
     private ExpressionSyntax parseExpression() {
         ExpressionSyntax left = parsePrimaryExpression();
 
-        while (getCurrent().getKind() == SyntaxKind.PlusToken || getCurrent().getKind() == SyntaxKind.MinusToken) {
+        while (
+                getCurrent().getKind() == SyntaxKind.PlusToken ||
+                getCurrent().getKind() == SyntaxKind.MinusToken ||
+                getCurrent().getKind() == SyntaxKind.StarToken ||
+                getCurrent().getKind() == SyntaxKind.SlashToken
+        ) {
             SyntaxToken operatorToken = getNextToken();
             ExpressionSyntax right = parsePrimaryExpression();
             left = new BinaryExpressionSyntax(left, operatorToken, right);

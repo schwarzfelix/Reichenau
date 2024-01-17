@@ -45,9 +45,9 @@ public class Main {
             else {
                 Evaluator evaluator = new Evaluator((ExpressionSyntax) syntaxTree.getRoot());
                 int result = evaluator.evaluate();
-                System.out.println(ANSI_GREEN + result + ANSI_RESET);
+                System.out.println("Result: " + ANSI_GREEN + result + ANSI_RESET);
             }
-
+            
         }
     }
 
