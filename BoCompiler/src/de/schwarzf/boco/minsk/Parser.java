@@ -58,17 +58,32 @@ public class Parser {
     }
 
     public SyntaxTree parse() {
-        ExpressionSyntax expression =  parseExpression();
+        ExpressionSyntax expression =  parseTerm();
         SyntaxToken endOfFileToken = matchToken(SyntaxKind.EndOfFileToken);
         return new SyntaxTree(this.diagnostics, expression, endOfFileToken);
     }
 
-    private ExpressionSyntax parseExpression() {
-        ExpressionSyntax left = parsePrimaryExpression();
+    private ExpressionSyntax parseTerm() {
+
+        ExpressionSyntax left = parseFactor();
 
         while (
                 getCurrent().getKind() == SyntaxKind.PlusToken  ||
-                getCurrent().getKind() == SyntaxKind.MinusToken ||
+                getCurrent().getKind() == SyntaxKind.MinusToken
+        ) {
+            SyntaxToken operatorToken = getNextToken();
+            ExpressionSyntax right = parseFactor();
+            left = new BinaryExpressionSyntax(left, operatorToken, right);
+        }
+
+        return left;
+    }
+
+    private ExpressionSyntax parseFactor() {
+
+        ExpressionSyntax left = parsePrimaryExpression();
+
+        while (
                 getCurrent().getKind() == SyntaxKind.StarToken  ||
                 getCurrent().getKind() == SyntaxKind.SlashToken
         ) {
@@ -78,6 +93,7 @@ public class Parser {
         }
 
         return left;
+
     }
 
     private ExpressionSyntax parsePrimaryExpression() {
