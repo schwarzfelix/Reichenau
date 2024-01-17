@@ -63,42 +63,42 @@ final class Parser {
         return new SyntaxTree(this.diagnostics, expression, endOfFileToken);
     }
 
+
+    private int getBinaryOperatorPrecedence(SyntaxKind kind) {
+        switch (kind) {
+            case StarToken:
+            case SlashToken:
+                return 2;
+            case PlusToken:
+            case MinusToken:
+                return 1;
+            default:
+                return 0;
+        }
+    }
+
     private ExpressionSyntax parseExpression() {
-        return parseTerm();
+        return parseExpression(0);
+    }
+    private ExpressionSyntax parseExpression(int parentPrecedence) {
+
+         ExpressionSyntax left = parsePrimaryExpression();
+
+         while (true) {
+             int precedence = getBinaryOperatorPrecedence(getCurrent().getKind());
+             if (precedence == 0 || precedence <= parentPrecedence) {
+                 break;
+             }
+
+                SyntaxToken operatorToken = getNextToken();
+                ExpressionSyntax right = parseExpression(precedence);
+                left = new BinaryExpressionSyntax(left, operatorToken, right);
+         }
+
+         return left;
+
     }
 
-    private ExpressionSyntax parseTerm() {
-
-        ExpressionSyntax left = parseFactor();
-
-        while (
-                getCurrent().getKind() == SyntaxKind.PlusToken  ||
-                getCurrent().getKind() == SyntaxKind.MinusToken
-        ) {
-            SyntaxToken operatorToken = getNextToken();
-            ExpressionSyntax right = parseFactor();
-            left = new BinaryExpressionSyntax(left, operatorToken, right);
-        }
-
-        return left;
-    }
-
-    private ExpressionSyntax parseFactor() {
-
-        ExpressionSyntax left = parsePrimaryExpression();
-
-        while (
-                getCurrent().getKind() == SyntaxKind.StarToken  ||
-                getCurrent().getKind() == SyntaxKind.SlashToken
-        ) {
-            SyntaxToken operatorToken = getNextToken();
-            ExpressionSyntax right = parsePrimaryExpression();
-            left = new BinaryExpressionSyntax(left, operatorToken, right);
-        }
-
-        return left;
-
-    }
 
     private ExpressionSyntax parsePrimaryExpression() {
 
