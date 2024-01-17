@@ -1,9 +1,6 @@
 package de.schwarzf.boco;
 
-import de.schwarzf.boco.minsk.Parser;
-import de.schwarzf.boco.minsk.SyntaxNode;
-import de.schwarzf.boco.minsk.SyntaxToken;
-import de.schwarzf.boco.minsk.SyntaxTree;
+import de.schwarzf.boco.minsk.*;
 
 public class Main {
 
@@ -44,6 +41,11 @@ public class Main {
                 for (String diagnostic : syntaxTree.getDiagnostics()) {
                     System.out.println(ANSI_RED + diagnostic + ANSI_RESET);
                 }
+            }
+            else {
+                Evaluator evaluator = new Evaluator((ExpressionSyntax) syntaxTree.getRoot());
+                int result = evaluator.evaluate();
+                System.out.println(ANSI_GREEN + result + ANSI_RESET);
             }
 
         }

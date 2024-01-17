@@ -48,7 +48,16 @@ public class Lexer {
             }
             int length = position - start;
             String text = this.text.substring(start, start + length);
-            return new SyntaxToken(SyntaxKind.NumberToken, start, text, Integer.parseInt(text));
+
+            int value = 0;
+
+            try {
+                value = Integer.parseInt(text);
+            } catch (NumberFormatException e) {
+                this.diagnostics.add(String.format("LEXER ERROR: The number %s is not a valid Int32.", text));
+            }
+
+            return new SyntaxToken(SyntaxKind.NumberToken, start, text, value);
         }
 
         // whitespace and newlines
