@@ -11,7 +11,7 @@ public enum SyntaxKind {
 
     //Expressions
     BinaryExpression,
-    NumberExpression,
+    LiteralExpression,
     OpenParenthesisToken,
     CloseParenthesisToken,
 
