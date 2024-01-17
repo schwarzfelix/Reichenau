@@ -1,6 +1,4 @@
-package de.schwarzf.boco.minsk;
-
-import javafx.beans.binding.NumberExpression;
+package de.schwarzf.boco.minsk.codeAnalysis;
 
 public class Evaluator {
     ExpressionSyntax root;

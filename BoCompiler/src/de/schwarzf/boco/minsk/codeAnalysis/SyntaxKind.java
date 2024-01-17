@@ -1,4 +1,4 @@
-package de.schwarzf.boco.minsk;
+package de.schwarzf.boco.minsk.codeAnalysis;
 
 public enum SyntaxKind {
 

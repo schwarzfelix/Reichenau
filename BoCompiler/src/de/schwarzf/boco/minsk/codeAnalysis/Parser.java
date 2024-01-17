@@ -1,4 +1,4 @@
-package de.schwarzf.boco.minsk;
+package de.schwarzf.boco.minsk.codeAnalysis;
 
 import java.util.ArrayList;
 

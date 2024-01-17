@@ -1,8 +1,8 @@
-package de.schwarzf.boco.minsk;
+package de.schwarzf.boco.minsk.codeAnalysis;
 
 import java.util.Arrays;
 
-public final class ParenthesizedExpressionSyntax  extends ExpressionSyntax{
+public final class ParenthesizedExpressionSyntax  extends ExpressionSyntax {
     public final SyntaxToken openParenthesisToken;
     public final ExpressionSyntax expression;
     public final SyntaxToken closeParenthesisToken;

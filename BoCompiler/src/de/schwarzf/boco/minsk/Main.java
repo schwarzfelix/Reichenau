@@ -1,6 +1,6 @@
-package de.schwarzf.boco;
+package de.schwarzf.boco.minsk;
 
-import de.schwarzf.boco.minsk.*;
+import de.schwarzf.boco.minsk.codeAnalysis.*;
 
 public class Main {
 
@@ -23,7 +23,10 @@ public class Main {
     public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
 
     public static void main(String[] args) {
+
         System.out.println("BoCo: SchwarzF's BoCompiler for the BoCode Programming Language");
+        boolean showTree = false;
+
         while (true) {
 
             System.out.println("―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――");
@@ -32,9 +35,25 @@ public class Main {
             java.util.Scanner scanner = new java.util.Scanner(System.in);
             String line = scanner.nextLine();
 
+            if (line.equals("#exit")) {
+                break;
+            }
+            else if (line.equals("#tree")) {
+                showTree = !showTree;
+                System.out.println("Show parse tree: " + showTree);
+                continue;
+            }
+            else if (line.equals("#clear")) {
+                System.out.print("\033[H\033[2J");
+                System.out.flush();
+                continue;
+            }
+
             SyntaxTree syntaxTree = SyntaxTree.parse(line);
 
-            prettyPrint(syntaxTree.getRoot(), "", true);
+            if (showTree) {
+                prettyPrint(syntaxTree.getRoot(), "", true);
+            }
 
             if (syntaxTree.getDiagnostics().length > 0) {
                 for (String diagnostic : syntaxTree.getDiagnostics()) {

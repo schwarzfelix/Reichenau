@@ -1,6 +1,6 @@
-package de.schwarzf.boco.minsk;
+package de.schwarzf.boco.minsk.codeAnalysis;
 
-public final class NumberSyntax extends ExpressionSyntax{
+public final class NumberSyntax extends ExpressionSyntax {
     private SyntaxToken numberToken;
     public NumberSyntax(SyntaxToken token){
         this.numberToken = token;

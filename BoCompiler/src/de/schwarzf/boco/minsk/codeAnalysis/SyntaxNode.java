@@ -1,6 +1,4 @@
-package de.schwarzf.boco.minsk;
-
-import java.util.ArrayList;
+package de.schwarzf.boco.minsk.codeAnalysis;
 
 public abstract class SyntaxNode {
 
