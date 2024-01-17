@@ -67,9 +67,9 @@ public class Parser {
         ExpressionSyntax left = parsePrimaryExpression();
 
         while (
-                getCurrent().getKind() == SyntaxKind.PlusToken ||
+                getCurrent().getKind() == SyntaxKind.PlusToken  ||
                 getCurrent().getKind() == SyntaxKind.MinusToken ||
-                getCurrent().getKind() == SyntaxKind.StarToken ||
+                getCurrent().getKind() == SyntaxKind.StarToken  ||
                 getCurrent().getKind() == SyntaxKind.SlashToken
         ) {
             SyntaxToken operatorToken = getNextToken();
