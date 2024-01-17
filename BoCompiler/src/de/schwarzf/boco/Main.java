@@ -3,6 +3,7 @@ package de.schwarzf.boco;
 import de.schwarzf.boco.minsk.Parser;
 import de.schwarzf.boco.minsk.SyntaxNode;
 import de.schwarzf.boco.minsk.SyntaxToken;
+import de.schwarzf.boco.minsk.SyntaxTree;
 
 public class Main {
 
@@ -35,12 +36,12 @@ public class Main {
             String input = scanner.nextLine();
 
             Parser parser = new Parser(input);
-            SyntaxNode expression = parser.parse();
+            SyntaxTree syntaxTree = parser.parse();
 
-            prettyPrint(expression, "", true);
+            prettyPrint(syntaxTree.getRoot(), "", true);
 
-            if (parser.getDiagnostics().size() > 0) {
-                for (String diagnostic : parser.getDiagnostics()) {
+            if (syntaxTree.getDiagnostics().length > 0) {
+                for (String diagnostic : syntaxTree.getDiagnostics()) {
                     System.out.println(ANSI_RED + diagnostic + ANSI_RESET);
                 }
             }

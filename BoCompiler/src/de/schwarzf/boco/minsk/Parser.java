@@ -57,7 +57,13 @@ public class Parser {
         return new SyntaxToken(kind, getCurrent().getPosition(), null, null);
     }
 
-    public ExpressionSyntax parse() {
+    public SyntaxTree parse() {
+        ExpressionSyntax expression =  parseExpression();
+        SyntaxToken endOfFileToken = matchToken(SyntaxKind.EndOfFileToken);
+        return new SyntaxTree(this.diagnostics, expression, endOfFileToken);
+    }
+
+    private ExpressionSyntax parseExpression() {
         ExpressionSyntax left = parsePrimaryExpression();
 
         while (getCurrent().getKind() == SyntaxKind.PlusToken || getCurrent().getKind() == SyntaxKind.MinusToken) {
