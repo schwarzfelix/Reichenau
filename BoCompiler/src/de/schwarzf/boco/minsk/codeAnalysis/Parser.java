@@ -63,20 +63,6 @@ final class Parser {
         return new SyntaxTree(this.diagnostics, expression, endOfFileToken);
     }
 
-
-    private int getBinaryOperatorPrecedence(SyntaxKind kind) {
-        switch (kind) {
-            case StarToken:
-            case SlashToken:
-                return 2;
-            case PlusToken:
-            case MinusToken:
-                return 1;
-            default:
-                return 0;
-        }
-    }
-
     private ExpressionSyntax parseExpression() {
         return parseExpression(0);
     }
@@ -85,7 +71,7 @@ final class Parser {
          ExpressionSyntax left = parsePrimaryExpression();
 
          while (true) {
-             int precedence = getBinaryOperatorPrecedence(getCurrent().getKind());
+             int precedence = SyntaxFacts.getBinaryOperatorPrecedence(getCurrent().getKind());
              if (precedence == 0 || precedence <= parentPrecedence) {
                  break;
              }
