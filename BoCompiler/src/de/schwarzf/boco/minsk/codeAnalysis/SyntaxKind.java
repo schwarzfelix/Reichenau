@@ -8,16 +8,21 @@ public enum SyntaxKind {
     MinusToken,
     StarToken,
     SlashToken,
-
-    //Expressions
-    BinaryExpression,
-    LiteralExpression,
     OpenParenthesisToken,
     CloseParenthesisToken,
+
+
+    //Expressions
+    UnaryExpression,
+    BinaryExpression,
+    LiteralExpression,
+    ParenthesizedExpression,
+
 
     //Other
     Whitespace,
     EndOfFileToken,
-    ParenthesizedExpression, BadToken
+
+    BadToken
 
 }

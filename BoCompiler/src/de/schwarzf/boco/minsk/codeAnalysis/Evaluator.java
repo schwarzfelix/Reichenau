@@ -15,6 +15,22 @@ public final class Evaluator {
             return n.getLiteralToken().getValue();
         }
 
+        if (node instanceof UnaryExpressionSyntax) {
+            UnaryExpressionSyntax u = (UnaryExpressionSyntax)node;
+
+            int operand = evaluateExpression(u.getOperand());
+
+            if (u.getOperatorToken().getKind() == SyntaxKind.PlusToken) {
+                return operand;
+            }
+            else if (u.getOperatorToken().getKind() == SyntaxKind.MinusToken) {
+                return -operand;
+            }
+            else {
+                throw new IllegalArgumentException("Unexpected unary operator <" + u.getOperatorToken().getKind() + ">");
+            }
+        }
+
         if (node instanceof BinaryExpressionSyntax) {
             BinaryExpressionSyntax b = (BinaryExpressionSyntax)node;
 
