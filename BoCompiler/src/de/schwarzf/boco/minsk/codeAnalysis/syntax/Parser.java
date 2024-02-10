@@ -16,10 +16,10 @@ final class Parser {
         do {
             token = lexer.lex();
 
-            if (token.getKind() != SyntaxKind.Whitespace && token.getKind() != SyntaxKind.BadToken) {
+            if (token.getKind() != SyntaxKind.WHITESPACE && token.getKind() != SyntaxKind.BAD_TOKEN) {
                 tokensList.add(token);
             }
-        } while (token.getKind() != SyntaxKind.EndOfFileToken);
+        } while (token.getKind() != SyntaxKind.END_OF_FILE_TOKEN);
 
         this.tokens = new SyntaxToken[tokensList.size()];
         this.tokens = (SyntaxToken[]) tokensList.toArray(this.tokens);
@@ -59,7 +59,7 @@ final class Parser {
 
     public SyntaxTree parse() {
         ExpressionSyntax expression =  parseExpression();
-        SyntaxToken endOfFileToken = matchToken(SyntaxKind.EndOfFileToken);
+        SyntaxToken endOfFileToken = matchToken(SyntaxKind.END_OF_FILE_TOKEN);
         return new SyntaxTree(this.diagnostics, expression, endOfFileToken);
     }
 
@@ -98,16 +98,16 @@ final class Parser {
 
     private ExpressionSyntax parsePrimaryExpression() {
 
-        if (getCurrent().getKind() == SyntaxKind.OpenParenthesisToken) {
+        if (getCurrent().getKind() == SyntaxKind.OPEN_PARENTHESIS_TOKEN) {
 
             SyntaxToken left = getNextToken();
             ExpressionSyntax expression = parseExpression();
-            SyntaxToken right = matchToken(SyntaxKind.CloseParenthesisToken);
+            SyntaxToken right = matchToken(SyntaxKind.CLOSE_PARENTHESIS_TOKEN);
 
             return new ParenthesizedExpressionSyntax(left, expression, right);
         }
 
-        SyntaxToken numberToken = matchToken(SyntaxKind.NumberToken);
+        SyntaxToken numberToken = matchToken(SyntaxKind.NUMBER_TOKEN);
         return new LiteralExpressionSyntax(numberToken);
     }
 }

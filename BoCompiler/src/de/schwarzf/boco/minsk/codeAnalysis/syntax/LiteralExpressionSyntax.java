@@ -16,7 +16,7 @@ public final class LiteralExpressionSyntax extends ExpressionSyntax {
 
     @Override
     public SyntaxKind getKind() {
-        return SyntaxKind.LiteralExpression;
+        return SyntaxKind.LITERAL_EXPRESSION;
     }
 
     @Override

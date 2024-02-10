@@ -18,7 +18,7 @@ final class BoundLiteralExpression extends BoundExpression{
 
     @Override
     public BoundNodeKind getKind() {
-        return BoundNodeKind.LiteralExpression;
+        return BoundNodeKind.LITERAL_EXPRESSION;
     }
 
 }

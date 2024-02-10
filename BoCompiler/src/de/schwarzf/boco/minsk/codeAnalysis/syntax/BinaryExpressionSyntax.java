@@ -1,10 +1,5 @@
 package de.schwarzf.boco.minsk.codeAnalysis.syntax;
 
-import de.schwarzf.boco.minsk.codeAnalysis.syntax.ExpressionSyntax;
-import de.schwarzf.boco.minsk.codeAnalysis.syntax.SyntaxKind;
-import de.schwarzf.boco.minsk.codeAnalysis.syntax.SyntaxNode;
-import de.schwarzf.boco.minsk.codeAnalysis.syntax.SyntaxToken;
-
 import java.util.Arrays;
 
 public final class BinaryExpressionSyntax extends ExpressionSyntax {
@@ -33,7 +28,7 @@ public final class BinaryExpressionSyntax extends ExpressionSyntax {
 
     @Override
     public SyntaxKind getKind() {
-        return SyntaxKind.BinaryExpression;
+        return SyntaxKind.BINARY_EXPRESSION;
     }
 
     @Override

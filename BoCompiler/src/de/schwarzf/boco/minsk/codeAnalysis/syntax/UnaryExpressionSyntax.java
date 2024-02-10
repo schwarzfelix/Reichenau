@@ -22,7 +22,7 @@ public final class UnaryExpressionSyntax extends ExpressionSyntax {
 
     @Override
     public SyntaxKind getKind() {
-        return SyntaxKind.UnaryExpression;
+        return SyntaxKind.UNARY_EXPRESSION;
     }
 
     @Override

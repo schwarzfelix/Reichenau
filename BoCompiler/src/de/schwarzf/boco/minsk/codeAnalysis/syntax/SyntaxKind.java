@@ -3,26 +3,26 @@ package de.schwarzf.boco.minsk.codeAnalysis.syntax;
 public enum SyntaxKind {
 
     //Tokens
-    NumberToken,
-    PlusToken,
-    MinusToken,
-    StarToken,
-    SlashToken,
-    OpenParenthesisToken,
-    CloseParenthesisToken,
+    NUMBER_TOKEN,
+    PLUS_TOKEN,
+    MINUS_TOKEN,
+    STAR_TOKEN,
+    SLASH_TOKEN,
+    OPEN_PARENTHESIS_TOKEN,
+    CLOSE_PARENTHESIS_TOKEN,
 
 
     //Expressions
-    UnaryExpression,
-    BinaryExpression,
-    LiteralExpression,
-    ParenthesizedExpression,
+    UNARY_EXPRESSION,
+    BINARY_EXPRESSION,
+    LITERAL_EXPRESSION,
+    PARENTHESIZED_EXPRESSION,
 
 
     //Other
-    Whitespace,
-    EndOfFileToken,
+    WHITESPACE,
+    END_OF_FILE_TOKEN,
 
-    BadToken
+    BAD_TOKEN
 
 }

@@ -26,7 +26,7 @@ final class BoundBinaryExpression extends BoundExpression{
 
     @Override
     public BoundNodeKind getKind() {
-        return BoundNodeKind.BinaryExpression;
+        return BoundNodeKind.BINARY_EXPRESSION;
     }
 
     @Override

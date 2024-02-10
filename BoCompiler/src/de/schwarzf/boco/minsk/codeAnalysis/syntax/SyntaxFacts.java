@@ -3,8 +3,8 @@ package de.schwarzf.boco.minsk.codeAnalysis.syntax;
 public class SyntaxFacts {
     public static int getUnaryOperatorPrecedence(SyntaxKind kind) {
         switch (kind) {
-            case PlusToken:
-            case MinusToken:
+            case PLUS_TOKEN:
+            case MINUS_TOKEN:
                 return 3;
             default:
                 return 0;
@@ -12,11 +12,11 @@ public class SyntaxFacts {
     }
     public static int getBinaryOperatorPrecedence(SyntaxKind kind) {
         switch (kind) {
-            case StarToken:
-            case SlashToken:
+            case STAR_TOKEN:
+            case SLASH_TOKEN:
                 return 2;
-            case PlusToken:
-            case MinusToken:
+            case PLUS_TOKEN:
+            case MINUS_TOKEN:
                 return 1;
             default:
                 return 0;

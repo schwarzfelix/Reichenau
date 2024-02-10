@@ -22,10 +22,10 @@ public final class Evaluator {
 
             int operand = evaluateExpression(u.getOperand());
 
-            if (u.getOperatorToken().getKind() == SyntaxKind.PlusToken) {
+            if (u.getOperatorToken().getKind() == SyntaxKind.PLUS_TOKEN) {
                 return operand;
             }
-            else if (u.getOperatorToken().getKind() == SyntaxKind.MinusToken) {
+            else if (u.getOperatorToken().getKind() == SyntaxKind.MINUS_TOKEN) {
                 return -operand;
             }
             else {
@@ -39,16 +39,16 @@ public final class Evaluator {
             int left = evaluateExpression(b.getLeft());
             int right = evaluateExpression(b.getRight());
 
-            if (b.getOperatorToken().getKind() == SyntaxKind.PlusToken) {
+            if (b.getOperatorToken().getKind() == SyntaxKind.PLUS_TOKEN) {
                 return left + right;
             }
-            else if (b.getOperatorToken().getKind() == SyntaxKind.MinusToken) {
+            else if (b.getOperatorToken().getKind() == SyntaxKind.MINUS_TOKEN) {
                 return left - right;
             }
-            else if (b.getOperatorToken().getKind() == SyntaxKind.StarToken) {
+            else if (b.getOperatorToken().getKind() == SyntaxKind.STAR_TOKEN) {
                 return left * right;
             }
-            else if (b.getOperatorToken().getKind() == SyntaxKind.SlashToken) {
+            else if (b.getOperatorToken().getKind() == SyntaxKind.SLASH_TOKEN) {
                 return left / right;
             }
             else {

@@ -24,6 +24,6 @@ final class BoundUnaryExpression extends BoundExpression{
 
     @Override
     public BoundNodeKind getKind() {
-        return BoundNodeKind.UnaryExpression;
+        return BoundNodeKind.UNARY_EXPRESSION;
     }
 }

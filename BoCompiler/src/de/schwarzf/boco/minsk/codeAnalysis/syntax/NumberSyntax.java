@@ -10,7 +10,7 @@ public final class NumberSyntax extends ExpressionSyntax {
 
     @Override
     public SyntaxKind getKind() {
-        return SyntaxKind.NumberToken;
+        return SyntaxKind.NUMBER_TOKEN;
     }
 
     public SyntaxToken getNumberToken(){

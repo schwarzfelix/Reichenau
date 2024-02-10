@@ -15,7 +15,7 @@ public final class ParenthesizedExpressionSyntax  extends ExpressionSyntax {
 
     @Override
     public SyntaxKind getKind() {
-        return SyntaxKind.ParenthesizedExpression;
+        return SyntaxKind.PARENTHESIZED_EXPRESSION;
     }
 
     @Override

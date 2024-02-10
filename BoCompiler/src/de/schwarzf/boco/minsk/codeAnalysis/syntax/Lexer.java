@@ -37,7 +37,7 @@ final class Lexer {
     public SyntaxToken lex(){
 
         if (position >= text.length() || getCurrent() == '\0') {
-            return new SyntaxToken(SyntaxKind.EndOfFileToken, position, "\0", null);
+            return new SyntaxToken(SyntaxKind.END_OF_FILE_TOKEN, position, "\0", null);
         }
 
         Set<Character> digits = new HashSet<>();
@@ -58,7 +58,7 @@ final class Lexer {
                 this.diagnostics.add(String.format("LEXER ERROR: The number %s is not a valid Int32.", text));
             }
 
-            return new SyntaxToken(SyntaxKind.NumberToken, start, text, value);
+            return new SyntaxToken(SyntaxKind.NUMBER_TOKEN, start, text, value);
         }
 
         // whitespace and newlines
@@ -69,25 +69,25 @@ final class Lexer {
             }
             int length = position - start;
             String text = this.text.substring(start, start + length);
-            return new SyntaxToken(SyntaxKind.Whitespace, start, text, null);
+            return new SyntaxToken(SyntaxKind.WHITESPACE, start, text, null);
         }
 
         switch (getCurrent()) {
             case '+':
-                return new SyntaxToken(SyntaxKind.PlusToken, position++, "+", null);
+                return new SyntaxToken(SyntaxKind.PLUS_TOKEN, position++, "+", null);
             case '-':
-                return new SyntaxToken(SyntaxKind.MinusToken, position++, "-", null);
+                return new SyntaxToken(SyntaxKind.MINUS_TOKEN, position++, "-", null);
             case '*':
-                return new SyntaxToken(SyntaxKind.StarToken, position++, "*", null);
+                return new SyntaxToken(SyntaxKind.STAR_TOKEN, position++, "*", null);
             case '/':
-                return new SyntaxToken(SyntaxKind.SlashToken, position++, "/", null);
+                return new SyntaxToken(SyntaxKind.SLASH_TOKEN, position++, "/", null);
             case '(':
-                return new SyntaxToken(SyntaxKind.OpenParenthesisToken, position++, "(", null);
+                return new SyntaxToken(SyntaxKind.OPEN_PARENTHESIS_TOKEN, position++, "(", null);
             case ')':
-                return new SyntaxToken(SyntaxKind.CloseParenthesisToken, position++, ")", null);
+                return new SyntaxToken(SyntaxKind.CLOSE_PARENTHESIS_TOKEN, position++, ")", null);
         }
 
         this.diagnostics.add(String.format("LEXER ERROR: Bad character input: '%s'", getCurrent()));
-        return new SyntaxToken(SyntaxKind.BadToken, position++, text.substring(position -1, position), null);
+        return new SyntaxToken(SyntaxKind.BAD_TOKEN, position++, text.substring(position -1, position), null);
     }
 }

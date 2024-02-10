@@ -15,11 +15,11 @@ public class Binder {
     public BoundExpression bindExpression(ExpressionSyntax syntax) {
 
         switch (syntax.getKind()) {
-            case LiteralExpression:
+            case LITERAL_EXPRESSION:
                 return bindLiteralExpression((LiteralExpressionSyntax)syntax);
-            case UnaryExpression:
+            case UNARY_EXPRESSION:
                 return bindUnaryExpression((UnaryExpressionSyntax)syntax);
-            case BinaryExpression:
+            case BINARY_EXPRESSION:
                 return bindBinaryExpression((BinaryExpressionSyntax)syntax);
             default:
                 throw new IllegalArgumentException("Unexpected syntax: " + syntax.getKind());
@@ -74,9 +74,9 @@ public class Binder {
         }
 
         switch (kind) {
-            case PlusToken:
+            case PLUS_TOKEN:
                 return BoundUnaryOperatorKind.IDENTITY;
-            case MinusToken:
+            case MINUS_TOKEN:
                 return BoundUnaryOperatorKind.NEGATION;
             default:
                 throw new IllegalArgumentException("Unexpected unary operator: " + kind);
@@ -89,13 +89,13 @@ public class Binder {
         }
 
         switch (kind) {
-            case PlusToken:
+            case PLUS_TOKEN:
                 return BoundBinaryOperatorKind.ADDITION;
-            case MinusToken:
+            case MINUS_TOKEN:
                 return BoundBinaryOperatorKind.SUBTRACTION;
-            case StarToken:
+            case STAR_TOKEN:
                 return BoundBinaryOperatorKind.MULTIPLICATION;
-            case SlashToken:
+            case SLASH_TOKEN:
                 return BoundBinaryOperatorKind.DIVISION;
             default:
                 throw new IllegalArgumentException("Unexpected binary operator: " + kind);
