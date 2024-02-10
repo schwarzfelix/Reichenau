@@ -29,10 +29,10 @@ public class Binder {
 
     private BoundExpression bindLiteralExpression(LiteralExpressionSyntax syntax) {
 
-        int value = syntax.getLiteralToken().getValue();
+        Object value;
 
-        if (syntax.getLiteralToken().getValue() instanceof Integer) {
-            value = (int)syntax.getLiteralToken().getValue();
+        if (syntax.getValue() != null) {
+            value = syntax.getValue();
         } else {
             value = 0;
         }
@@ -70,7 +70,7 @@ public class Binder {
     private BoundUnaryOperatorKind bindUnaryOperatorKind(SyntaxKind kind, Class<?> operandType) {
 
         if (operandType != int.class) {
-            throw new IllegalArgumentException("Unary operator cannot be applied to type " + operandType);
+            diagnostics.add("Unary operator " + kind + " is not defined for type " + operandType + ".");
         }
 
         switch (kind) {
@@ -85,7 +85,7 @@ public class Binder {
     private BoundBinaryOperatorKind bindBinaryOperatorKind(SyntaxKind kind, Class<?> leftType, Class<?> rightType) {
 
         if (leftType != Integer.class || rightType != Integer.class) {
-            throw new IllegalArgumentException("Binary operator cannot be applied to types " + leftType + " and " + rightType);
+            diagnostics.add("Binary operator " + kind + " is not defined for types " + leftType + " and " + rightType + ".");
         }
 
         switch (kind) {

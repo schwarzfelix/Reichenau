@@ -80,7 +80,7 @@ public class Main {
             }
             else {
                 Evaluator evaluator = new Evaluator(boundExpression);
-                int result = evaluator.evaluate();
+                Object result = evaluator.evaluate();
                 System.out.println("Result: " + ANSI_GREEN + result + ANSI_RESET);
             }
 

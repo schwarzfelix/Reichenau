@@ -8,20 +8,20 @@ public final class Evaluator {
     public Evaluator(BoundExpression root) {
         this.root = root;
     }
-    public int evaluate() {
+    public Object evaluate() {
         return evaluateExpression(this.root);
     }
-    private int evaluateExpression(BoundExpression node) {
+    private Object evaluateExpression(BoundExpression node) {
 
         if (node instanceof BoundLiteralExpression) {
             BoundLiteralExpression n = (BoundLiteralExpression) node;
-            return (int) n.getValue();
+            return n.getValue();
         }
 
         if (node instanceof BoundUnaryExpression) {
             BoundUnaryExpression u = (BoundUnaryExpression) node;
 
-            int operand = evaluateExpression(u.getOperand());
+            int operand = (int) evaluateExpression(u.getOperand());
 
             switch (u.getOperatorKind()) {
                 case IDENTITY:
@@ -38,8 +38,8 @@ public final class Evaluator {
         if (node instanceof BoundBinaryExpression) {
             BoundBinaryExpression b = (BoundBinaryExpression) node;
 
-            int left = evaluateExpression(b.getLeft());
-            int right = evaluateExpression(b.getRight());
+            int left = (int) evaluateExpression(b.getLeft());
+            int right = (int) evaluateExpression(b.getRight());
 
             switch (b.getOperatorKind()) {
                 case ADDITION:
