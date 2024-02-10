@@ -1,6 +1,6 @@
 package de.schwarzf.boco.minsk.codeAnalysis.binding;
 
-final class BoundBinaryExpression extends BoundExpression{
+public final class BoundBinaryExpression extends BoundExpression{
 
     private final BoundExpression left;
     private final BoundBinaryOperatorKind operator;
@@ -16,7 +16,7 @@ final class BoundBinaryExpression extends BoundExpression{
         return left;
     }
 
-    public BoundBinaryOperatorKind getOperator() {
+    public BoundBinaryOperatorKind getOperatorKind() {
         return operator;
     }
 

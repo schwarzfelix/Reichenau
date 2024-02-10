@@ -1,10 +1,14 @@
 package de.schwarzf.boco.minsk;
 
 import de.schwarzf.boco.minsk.codeAnalysis.*;
+import de.schwarzf.boco.minsk.codeAnalysis.binding.BoundExpression;
 import de.schwarzf.boco.minsk.codeAnalysis.syntax.ExpressionSyntax;
 import de.schwarzf.boco.minsk.codeAnalysis.syntax.SyntaxNode;
 import de.schwarzf.boco.minsk.codeAnalysis.syntax.SyntaxToken;
 import de.schwarzf.boco.minsk.codeAnalysis.syntax.SyntaxTree;
+import de.schwarzf.boco.minsk.codeAnalysis.binding.Binder;
+
+import java.util.ArrayList;
 
 public class Main {
 
@@ -54,18 +58,28 @@ public class Main {
             }
 
             SyntaxTree syntaxTree = SyntaxTree.parse(line);
+            Binder binder = new Binder();
+            BoundExpression boundExpression = binder.bindExpression((ExpressionSyntax) syntaxTree.getRoot());
+
+            ArrayList<String> diagnostics = new ArrayList<>();
+            for (String diagnostic : syntaxTree.getDiagnostics()) {
+                diagnostics.add(diagnostic);
+            }
+            for (String diagnostic : binder.getDiagnostics()) {
+                diagnostics.add(diagnostic);
+            }
 
             if (showTree) {
                 prettyPrint(syntaxTree.getRoot(), "", true);
             }
 
-            if (syntaxTree.getDiagnostics().length > 0) {
-                for (String diagnostic : syntaxTree.getDiagnostics()) {
+            if (diagnostics.size() > 0) {
+                for (String diagnostic : diagnostics) {
                     System.out.println(ANSI_RED + diagnostic + ANSI_RESET);
                 }
             }
             else {
-                Evaluator evaluator = new Evaluator((ExpressionSyntax) syntaxTree.getRoot());
+                Evaluator evaluator = new Evaluator(boundExpression);
                 int result = evaluator.evaluate();
                 System.out.println("Result: " + ANSI_GREEN + result + ANSI_RESET);
             }

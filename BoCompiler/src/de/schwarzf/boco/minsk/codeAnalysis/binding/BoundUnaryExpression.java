@@ -1,6 +1,6 @@
 package de.schwarzf.boco.minsk.codeAnalysis.binding;
 
-final class BoundUnaryExpression extends BoundExpression{
+public final class BoundUnaryExpression extends BoundExpression{
     private final BoundUnaryOperatorKind operatorKind;
     private final BoundExpression operand;
 

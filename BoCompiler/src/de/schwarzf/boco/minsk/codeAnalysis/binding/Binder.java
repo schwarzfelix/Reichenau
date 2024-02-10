@@ -84,7 +84,7 @@ public class Binder {
     }
     private BoundBinaryOperatorKind bindBinaryOperatorKind(SyntaxKind kind, Class<?> leftType, Class<?> rightType) {
 
-        if (leftType != int.class || rightType != int.class) {
+        if (leftType != Integer.class || rightType != Integer.class) {
             throw new IllegalArgumentException("Binary operator cannot be applied to types " + leftType + " and " + rightType);
         }
 

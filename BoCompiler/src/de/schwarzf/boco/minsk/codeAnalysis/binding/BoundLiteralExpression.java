@@ -1,6 +1,6 @@
 package de.schwarzf.boco.minsk.codeAnalysis.binding;
 
-final class BoundLiteralExpression extends BoundExpression{
+public final class BoundLiteralExpression extends BoundExpression{
 
     private final Object value;
     public BoundLiteralExpression(Object value) {
