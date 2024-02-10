@@ -13,8 +13,7 @@ public final class LiteralExpressionSyntax extends ExpressionSyntax {
     }
 
     public LiteralExpressionSyntax(SyntaxToken literalToken){
-        this.literalToken = literalToken;
-        this.value = literalToken.getValue();
+        this(literalToken, literalToken.getValue());
     }
 
     public SyntaxToken getLiteralToken(){
