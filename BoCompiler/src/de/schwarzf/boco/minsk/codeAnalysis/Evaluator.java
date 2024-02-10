@@ -1,5 +1,7 @@
 package de.schwarzf.boco.minsk.codeAnalysis;
 
+import de.schwarzf.boco.minsk.codeAnalysis.syntax.*;
+
 public final class Evaluator {
     ExpressionSyntax root;
     public Evaluator(ExpressionSyntax root) {

@@ -1,4 +1,4 @@
-package de.schwarzf.boco.minsk.codeAnalysis;
+package de.schwarzf.boco.minsk.codeAnalysis.syntax;
 
 // https://www.youtube.com/watch?v=wgHIkdUQbp0&list=PLRAdsfhKI4OWNOSfS7EUu5GRAVmze1t2y
 

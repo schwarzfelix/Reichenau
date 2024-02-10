@@ -1,4 +1,4 @@
-package de.schwarzf.boco.minsk.codeAnalysis;
+package de.schwarzf.boco.minsk.codeAnalysis.syntax;
 
 
 import java.util.Collections;

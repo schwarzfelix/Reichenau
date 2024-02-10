@@ -1,6 +1,10 @@
 package de.schwarzf.boco.minsk;
 
 import de.schwarzf.boco.minsk.codeAnalysis.*;
+import de.schwarzf.boco.minsk.codeAnalysis.syntax.ExpressionSyntax;
+import de.schwarzf.boco.minsk.codeAnalysis.syntax.SyntaxNode;
+import de.schwarzf.boco.minsk.codeAnalysis.syntax.SyntaxToken;
+import de.schwarzf.boco.minsk.codeAnalysis.syntax.SyntaxTree;
 
 public class Main {
 
