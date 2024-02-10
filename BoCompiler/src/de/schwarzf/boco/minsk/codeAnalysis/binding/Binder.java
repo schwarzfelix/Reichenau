@@ -1,5 +1,6 @@
 package de.schwarzf.boco.minsk.codeAnalysis.binding;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import de.schwarzf.boco.minsk.codeAnalysis.syntax.*;
 
 import java.util.ArrayList;
@@ -46,7 +47,7 @@ public class Binder {
         BoundUnaryOperatorKind boundOperatorKind = bindUnaryOperatorKind(syntax.getOperatorToken().getKind(), boundOperand.getType());
 
         if (boundOperatorKind == null) {
-            diagnostics.add("Unary operator " + syntax.getOperatorToken().getText() + " is not defined for type " + boundOperand.getType() + ".");
+            diagnostics.add("BINDER ERROR: Unary operator " + syntax.getOperatorToken().getText() + " is not defined for type " + boundOperand.getType() + ".");
             return boundOperand;
         }
 
@@ -60,7 +61,7 @@ public class Binder {
         BoundBinaryOperatorKind boundOperatorKind = bindBinaryOperatorKind(syntax.getOperatorToken().getKind(), boundLeft.getType(), boundRight.getType());
 
         if (boundOperatorKind == null) {
-            diagnostics.add("Binary operator " + syntax.getOperatorToken().getText() + " is not defined for types " + boundLeft.getType() + " and " + boundRight.getType() + ".");
+            diagnostics.add("BINDER ERROR: Binary operator " + syntax.getOperatorToken().getText() + " is not defined for types " + boundLeft.getType() + " and " + boundRight.getType() + ".");
             return boundLeft;
         }
 
@@ -69,36 +70,43 @@ public class Binder {
 
     private BoundUnaryOperatorKind bindUnaryOperatorKind(SyntaxKind kind, Class<?> operandType) {
 
-        if (operandType != int.class) {
-            diagnostics.add("Unary operator " + kind + " is not defined for type " + operandType + ".");
+        if (operandType == int.class) {
+            switch (kind) {
+                case PLUS_TOKEN:
+                    return BoundUnaryOperatorKind.IDENTITY;
+                case MINUS_TOKEN:
+                    return BoundUnaryOperatorKind.NEGATION;
+            }
+        } else if (operandType == boolean.class) {
+            switch (kind) {
+                case BANG_TOKEN:
+                    return BoundUnaryOperatorKind.LOGICAL_NEGATION;
+            }
         }
-
-        switch (kind) {
-            case PLUS_TOKEN:
-                return BoundUnaryOperatorKind.IDENTITY;
-            case MINUS_TOKEN:
-                return BoundUnaryOperatorKind.NEGATION;
-            default:
-                throw new IllegalArgumentException("Unexpected unary operator: " + kind);
-        }
+        return null;
     }
     private BoundBinaryOperatorKind bindBinaryOperatorKind(SyntaxKind kind, Class<?> leftType, Class<?> rightType) {
 
-        if (leftType != Integer.class || rightType != Integer.class) {
-            diagnostics.add("Binary operator " + kind + " is not defined for types " + leftType + " and " + rightType + ".");
+        if (leftType == Integer.class && rightType == Integer.class) {
+            switch (kind) {
+                case PLUS_TOKEN:
+                    return BoundBinaryOperatorKind.ADDITION;
+                case MINUS_TOKEN:
+                    return BoundBinaryOperatorKind.SUBTRACTION;
+                case STAR_TOKEN:
+                    return BoundBinaryOperatorKind.MULTIPLICATION;
+                case SLASH_TOKEN:
+                    return BoundBinaryOperatorKind.DIVISION;
+            }
+        } else if (leftType == Boolean.class && rightType == Boolean.class) {
+            switch (kind) {
+                case AMPERSAND_AMPERSAND_TOKEN:
+                    return BoundBinaryOperatorKind.LOGICAL_AND;
+                case PIPE_PIPE_TOKEN:
+                    return BoundBinaryOperatorKind.LOGICAL_OR;
+            }
         }
-
-        switch (kind) {
-            case PLUS_TOKEN:
-                return BoundBinaryOperatorKind.ADDITION;
-            case MINUS_TOKEN:
-                return BoundBinaryOperatorKind.SUBTRACTION;
-            case STAR_TOKEN:
-                return BoundBinaryOperatorKind.MULTIPLICATION;
-            case SLASH_TOKEN:
-                return BoundBinaryOperatorKind.DIVISION;
-            default:
-                throw new IllegalArgumentException("Unexpected binary operator: " + kind);
-        }
+        return null;
     }
 }
+

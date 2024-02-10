@@ -8,6 +8,9 @@ public enum SyntaxKind {
     MINUS_TOKEN,
     STAR_TOKEN,
     SLASH_TOKEN,
+    BANG_TOKEN,
+    AMPERSAND_AMPERSAND_TOKEN,
+    PIPE_PIPE_TOKEN,
     OPEN_PARENTHESIS_TOKEN,
     CLOSE_PARENTHESIS_TOKEN,
 
@@ -30,5 +33,6 @@ public enum SyntaxKind {
     END_OF_FILE_TOKEN,
 
     BAD_TOKEN
+
 
 }

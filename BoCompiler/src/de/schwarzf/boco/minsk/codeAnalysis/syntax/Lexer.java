@@ -23,10 +23,19 @@ final class Lexer {
     }
 
     private char getCurrent(){
-        if (position >= text.length()) {
+        return peek(0);
+    }
+
+    private char lookAhead(){
+        return peek(1);
+    }
+
+    private char peek(int offset){
+        int index = position + offset;
+        if (index >= text.length()) {
             return '\0';
         }
-        return text.charAt(position);
+        return text.charAt(index);
     }
 
     private void nextChar(){
@@ -97,6 +106,21 @@ final class Lexer {
                 return new SyntaxToken(SyntaxKind.OPEN_PARENTHESIS_TOKEN, position++, "(", null);
             case ')':
                 return new SyntaxToken(SyntaxKind.CLOSE_PARENTHESIS_TOKEN, position++, ")", null);
+
+            case '!':
+                return new SyntaxToken(SyntaxKind.BANG_TOKEN, position++, "!", null);
+            case '&':
+                if (lookAhead() == '&') {
+                    position++;
+                    return new SyntaxToken(SyntaxKind.AMPERSAND_AMPERSAND_TOKEN, position += 2, "&&", null);
+                }
+                break;
+            case '|':
+                if (lookAhead() == '|') {
+                    position++;
+                    return new SyntaxToken(SyntaxKind.PIPE_PIPE_TOKEN, position += 2, "||", null);
+                }
+                break;
         }
 
         this.diagnostics.add(String.format("LEXER ERROR: Bad character input: '%s'", getCurrent()));

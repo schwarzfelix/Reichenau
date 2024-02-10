@@ -21,13 +21,15 @@ public final class Evaluator {
         if (node instanceof BoundUnaryExpression) {
             BoundUnaryExpression u = (BoundUnaryExpression) node;
 
-            int operand = (int) evaluateExpression(u.getOperand());
+            Object operand = evaluateExpression(u.getOperand());
 
             switch (u.getOperatorKind()) {
                 case IDENTITY:
-                    return operand;
+                    return (int) operand;
                 case NEGATION:
-                    return -operand;
+                    return - (int) operand;
+                case LOGICAL_NEGATION:
+                    return !(boolean) operand;
                 default:
                     throw new IllegalArgumentException("Unexpected unary operator <" + u.getOperatorKind() + ">");
             }
@@ -38,18 +40,22 @@ public final class Evaluator {
         if (node instanceof BoundBinaryExpression) {
             BoundBinaryExpression b = (BoundBinaryExpression) node;
 
-            int left = (int) evaluateExpression(b.getLeft());
-            int right = (int) evaluateExpression(b.getRight());
+            Object left = evaluateExpression(b.getLeft());
+            Object right = evaluateExpression(b.getRight());
 
             switch (b.getOperatorKind()) {
                 case ADDITION:
-                    return left + right;
+                    return (int) left + (int) right;
                 case SUBTRACTION:
-                    return left - right;
+                    return (int) left - (int) right;
                 case MULTIPLICATION:
-                    return left * right;
+                    return (int) left * (int) right;
                 case DIVISION:
-                    return left / right;
+                    return (int) left / (int) right;
+                case LOGICAL_AND:
+                    return (boolean) left && (boolean) right;
+                case LOGICAL_OR:
+                    return (boolean) left || (boolean) right;
                 default:
                     throw new IllegalArgumentException("Unexpected binary operator <" + b.getOperatorKind() + ">");
             }
