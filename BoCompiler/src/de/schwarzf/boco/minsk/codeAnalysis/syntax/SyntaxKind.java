@@ -18,8 +18,14 @@ public enum SyntaxKind {
     LITERAL_EXPRESSION,
     PARENTHESIZED_EXPRESSION,
 
+    //Keywords
+    TRUE_KEYWORD,
+    FALSE_KEYWORD,
+
 
     //Other
+    IDENTIFIER_TOKEN,
+
     WHITESPACE,
     END_OF_FILE_TOKEN,
 

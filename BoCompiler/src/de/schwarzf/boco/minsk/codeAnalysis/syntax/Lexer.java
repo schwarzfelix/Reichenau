@@ -72,6 +72,18 @@ final class Lexer {
             return new SyntaxToken(SyntaxKind.WHITESPACE, start, text, null);
         }
 
+        // letters and keywords
+        if (Character.isLetter(getCurrent())) {
+            int start = position;
+            while (Character.isLetter(getCurrent())) {
+                nextChar();
+            }
+            int length = position - start;
+            String text = this.text.substring(start, start + length);
+            SyntaxKind kind = SyntaxFacts.getKeywordKind(text);
+            return new SyntaxToken(kind, start, text, null);
+        }
+
         switch (getCurrent()) {
             case '+':
                 return new SyntaxToken(SyntaxKind.PLUS_TOKEN, position++, "+", null);
