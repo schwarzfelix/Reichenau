@@ -38,7 +38,7 @@ public class Main {
         while (true) {
 
             System.out.println("―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――");
-            System.out.print("Expression> ");
+            System.out.print("> ");
 
             java.util.Scanner scanner = new java.util.Scanner(System.in);
             String line = scanner.nextLine();
@@ -68,12 +68,21 @@ public class Main {
             }
 
             if (diagnostics.size() > 0) {
+
                 for (Diagnostic diagnostic : diagnostics) {
-                    System.out.println(ANSI_RED + diagnostic + ANSI_RESET);
+
+                    String prefix = line.substring(0, diagnostic.getSpan().getStart());
+                    String error = line.substring(diagnostic.getSpan().getStart(), diagnostic.getSpan().getEnd());
+                    String suffix = line.substring(diagnostic.getSpan().getEnd());
+
+                    System.out.println(ANSI_BLACK + ANSI_RED_BACKGROUND + diagnostic.getMessage() + ANSI_RESET);
+                    System.out.println("    " + prefix + ANSI_RED + error + ANSI_RESET + suffix);
+
                 }
+
             }
             else {
-                System.out.println("Result: " + ANSI_GREEN + result.getValue() + ANSI_RESET);
+                System.out.println("= " + ANSI_BLACK + ANSI_GREEN_BACKGROUND + result.getValue() + ANSI_RESET);
             }
 
         }
