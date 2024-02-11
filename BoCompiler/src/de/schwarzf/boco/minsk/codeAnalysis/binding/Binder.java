@@ -22,6 +22,8 @@ public class Binder {
                 return bindUnaryExpression((UnaryExpressionSyntax)syntax);
             case BINARY_EXPRESSION:
                 return bindBinaryExpression((BinaryExpressionSyntax)syntax);
+            case PARENTHESIZED_EXPRESSION:
+                return bindExpression(((ParenthesizedExpressionSyntax)syntax).getExpression());
             default:
                 throw new IllegalArgumentException("Unexpected syntax: " + syntax.getKind());
         }
