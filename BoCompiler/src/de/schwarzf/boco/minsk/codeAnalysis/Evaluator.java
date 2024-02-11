@@ -23,7 +23,7 @@ public final class Evaluator {
 
             Object operand = evaluateExpression(u.getOperand());
 
-            switch (u.getOperatorKind()) {
+            switch (u.getOperator().getKind()) {
                 case IDENTITY:
                     return (int) operand;
                 case NEGATION:
@@ -31,7 +31,7 @@ public final class Evaluator {
                 case LOGICAL_NEGATION:
                     return !(boolean) operand;
                 default:
-                    throw new IllegalArgumentException("Unexpected unary operator <" + u.getOperatorKind() + ">");
+                    throw new IllegalArgumentException("Unexpected unary operator <" + u.getOperator().getKind() + ">");
             }
 
 
@@ -43,7 +43,7 @@ public final class Evaluator {
             Object left = evaluateExpression(b.getLeft());
             Object right = evaluateExpression(b.getRight());
 
-            switch (b.getOperatorKind()) {
+            switch (b.getOperator().getKind()) {
                 case ADDITION:
                     return (int) left + (int) right;
                 case SUBTRACTION:
@@ -57,7 +57,7 @@ public final class Evaluator {
                 case LOGICAL_OR:
                     return (boolean) left || (boolean) right;
                 default:
-                    throw new IllegalArgumentException("Unexpected binary operator <" + b.getOperatorKind() + ">");
+                    throw new IllegalArgumentException("Unexpected binary operator <" + b.getOperator().getKind() + ">");
             }
         }
 

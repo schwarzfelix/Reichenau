@@ -1,16 +1,16 @@
 package de.schwarzf.boco.minsk.codeAnalysis.binding;
 
 public final class BoundUnaryExpression extends BoundExpression{
-    private final BoundUnaryOperatorKind operatorKind;
+    private final BoundUnaryOperator operator;
     private final BoundExpression operand;
 
-    public BoundUnaryExpression(BoundUnaryOperatorKind operator, BoundExpression operand) {
-        this.operatorKind = operator;
+    public BoundUnaryExpression(BoundUnaryOperator operator, BoundExpression operand) {
+        this.operator = operator;
         this.operand = operand;
     }
 
-    public BoundUnaryOperatorKind getOperatorKind() {
-        return operatorKind;
+    public BoundUnaryOperator getOperator() {
+        return operator;
     }
 
     public BoundExpression getOperand() {

@@ -44,69 +44,29 @@ public class Binder {
     private BoundExpression bindUnaryExpression(UnaryExpressionSyntax syntax) {
 
         BoundExpression boundOperand = bindExpression(syntax.getOperand());
-        BoundUnaryOperatorKind boundOperatorKind = bindUnaryOperatorKind(syntax.getOperatorToken().getKind(), boundOperand.getType());
+        BoundUnaryOperator boundOperator = BoundUnaryOperator.bind(syntax.getOperatorToken().getKind(), boundOperand.getType());
 
-        if (boundOperatorKind == null) {
+        if (boundOperator == null) {
             diagnostics.add("BINDER ERROR: Unary operator " + syntax.getOperatorToken().getText() + " is not defined for type " + boundOperand.getType() + ".");
             return boundOperand;
         }
 
-        return new BoundUnaryExpression(boundOperatorKind, boundOperand);
+        return new BoundUnaryExpression(boundOperator, boundOperand);
     }
 
     private BoundExpression bindBinaryExpression(BinaryExpressionSyntax syntax) {
 
         BoundExpression boundLeft = bindExpression(syntax.getLeft());
         BoundExpression boundRight = bindExpression(syntax.getRight());
-        BoundBinaryOperatorKind boundOperatorKind = bindBinaryOperatorKind(syntax.getOperatorToken().getKind(), boundLeft.getType(), boundRight.getType());
+        BoundBinaryOperator boundOperator = BoundBinaryOperator.bind(syntax.getOperatorToken().getKind(), boundLeft.getType(), boundRight.getType());
 
-        if (boundOperatorKind == null) {
+        if (boundOperator == null) {
             diagnostics.add("BINDER ERROR: Binary operator " + syntax.getOperatorToken().getText() + " is not defined for types " + boundLeft.getType() + " and " + boundRight.getType() + ".");
             return boundLeft;
         }
 
-        return new BoundBinaryExpression(boundLeft, boundOperatorKind, boundRight);
+        return new BoundBinaryExpression(boundLeft, boundOperator, boundRight);
     }
 
-    private BoundUnaryOperatorKind bindUnaryOperatorKind(SyntaxKind kind, Class<?> operandType) {
-
-        if (operandType == int.class) {
-            switch (kind) {
-                case PLUS_TOKEN:
-                    return BoundUnaryOperatorKind.IDENTITY;
-                case MINUS_TOKEN:
-                    return BoundUnaryOperatorKind.NEGATION;
-            }
-        } else if (operandType == boolean.class) {
-            switch (kind) {
-                case BANG_TOKEN:
-                    return BoundUnaryOperatorKind.LOGICAL_NEGATION;
-            }
-        }
-        return null;
-    }
-    private BoundBinaryOperatorKind bindBinaryOperatorKind(SyntaxKind kind, Class<?> leftType, Class<?> rightType) {
-
-        if (leftType == Integer.class && rightType == Integer.class) {
-            switch (kind) {
-                case PLUS_TOKEN:
-                    return BoundBinaryOperatorKind.ADDITION;
-                case MINUS_TOKEN:
-                    return BoundBinaryOperatorKind.SUBTRACTION;
-                case STAR_TOKEN:
-                    return BoundBinaryOperatorKind.MULTIPLICATION;
-                case SLASH_TOKEN:
-                    return BoundBinaryOperatorKind.DIVISION;
-            }
-        } else if (leftType == Boolean.class && rightType == Boolean.class) {
-            switch (kind) {
-                case AMPERSAND_AMPERSAND_TOKEN:
-                    return BoundBinaryOperatorKind.LOGICAL_AND;
-                case PIPE_PIPE_TOKEN:
-                    return BoundBinaryOperatorKind.LOGICAL_OR;
-            }
-        }
-        return null;
-    }
 }
 

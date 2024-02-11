@@ -3,10 +3,10 @@ package de.schwarzf.boco.minsk.codeAnalysis.binding;
 public final class BoundBinaryExpression extends BoundExpression{
 
     private final BoundExpression left;
-    private final BoundBinaryOperatorKind operator;
+    private final BoundBinaryOperator operator;
     private final BoundExpression right;
 
-    public BoundBinaryExpression(BoundExpression left, BoundBinaryOperatorKind operator, BoundExpression right) {
+    public BoundBinaryExpression(BoundExpression left, BoundBinaryOperator operator, BoundExpression right) {
         this.left = left;
         this.operator = operator;
         this.right = right;
@@ -16,7 +16,7 @@ public final class BoundBinaryExpression extends BoundExpression{
         return left;
     }
 
-    public BoundBinaryOperatorKind getOperatorKind() {
+    public BoundBinaryOperator getOperator() {
         return operator;
     }
 
