@@ -47,7 +47,7 @@ public final class BoundUnaryOperator {
         return operandType;
     }
 
-    public Class<?> getResultType() {
+    public Class<?> getType() {
         return resultType;
     }
 

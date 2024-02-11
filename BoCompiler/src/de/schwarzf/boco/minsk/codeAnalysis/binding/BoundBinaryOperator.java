@@ -22,14 +22,22 @@ public final class BoundBinaryOperator {
         this(syntaxKind, kind, type, type, type);
     }
 
+    public BoundBinaryOperator(SyntaxKind syntaxKind, BoundBinaryOperatorKind kind, Class<?> operandType, Class<?> resultType) {
+        this(syntaxKind, kind, operandType, operandType, resultType);
+    }
+
     public static BoundBinaryOperator[] operators = {
         new BoundBinaryOperator(SyntaxKind.PLUS_TOKEN,                BoundBinaryOperatorKind.ADDITION,       Integer.class),
         new BoundBinaryOperator(SyntaxKind.MINUS_TOKEN,               BoundBinaryOperatorKind.SUBTRACTION,    Integer.class),
         new BoundBinaryOperator(SyntaxKind.STAR_TOKEN,                BoundBinaryOperatorKind.MULTIPLICATION, Integer.class),
         new BoundBinaryOperator(SyntaxKind.SLASH_TOKEN,               BoundBinaryOperatorKind.DIVISION,       Integer.class),
+        new BoundBinaryOperator(SyntaxKind.EQUALS_EQUALS_TOKEN,       BoundBinaryOperatorKind.EQUALS,         Integer.class, Boolean.class),
+        new BoundBinaryOperator(SyntaxKind.BANG_EQUALS_TOKEN,         BoundBinaryOperatorKind.NOT_EQUALS,     Integer.class, Boolean.class),
 
         new BoundBinaryOperator(SyntaxKind.AMPERSAND_AMPERSAND_TOKEN, BoundBinaryOperatorKind.LOGICAL_AND,    Boolean.class),
         new BoundBinaryOperator(SyntaxKind.PIPE_PIPE_TOKEN,           BoundBinaryOperatorKind.LOGICAL_OR,     Boolean.class),
+        new BoundBinaryOperator(SyntaxKind.EQUALS_EQUALS_TOKEN,       BoundBinaryOperatorKind.EQUALS,         Boolean.class, Boolean.class),
+        new BoundBinaryOperator(SyntaxKind.BANG_EQUALS_TOKEN,         BoundBinaryOperatorKind.NOT_EQUALS,     Boolean.class, Boolean.class),
     };
 
     public static BoundBinaryOperator bind(SyntaxKind syntaxKind, Class<?> leftType, Class<?> rightType) {
@@ -57,7 +65,7 @@ public final class BoundBinaryOperator {
         return rightType;
     }
 
-    public Class<?> getResultType() {
+    public Class<?> getType() {
         return resultType;
     }
 

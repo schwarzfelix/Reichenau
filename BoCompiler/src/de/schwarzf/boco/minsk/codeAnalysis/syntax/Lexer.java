@@ -107,20 +107,28 @@ final class Lexer {
             case ')':
                 return new SyntaxToken(SyntaxKind.CLOSE_PARENTHESIS_TOKEN, position++, ")", null);
 
-            case '!':
-                return new SyntaxToken(SyntaxKind.BANG_TOKEN, position++, "!", null);
             case '&':
                 if (lookAhead() == '&') {
-                    position++;
                     return new SyntaxToken(SyntaxKind.AMPERSAND_AMPERSAND_TOKEN, position += 2, "&&", null);
                 }
                 break;
             case '|':
                 if (lookAhead() == '|') {
-                    position++;
                     return new SyntaxToken(SyntaxKind.PIPE_PIPE_TOKEN, position += 2, "||", null);
                 }
                 break;
+            case '=':
+                if (lookAhead() == '=') {
+                    return new SyntaxToken(SyntaxKind.EQUALS_EQUALS_TOKEN, position += 2, "==", null);
+                }
+                break;
+            case '!':
+                if (lookAhead() == '=') {
+                    return new SyntaxToken(SyntaxKind.BANG_EQUALS_TOKEN, position += 2, "!=", null);
+                } else {
+                    return new SyntaxToken(SyntaxKind.BANG_TOKEN, position++, "!", null);
+                }
+
         }
 
         this.diagnostics.add(String.format("LEXER ERROR: Bad character input: '%s'", getCurrent()));

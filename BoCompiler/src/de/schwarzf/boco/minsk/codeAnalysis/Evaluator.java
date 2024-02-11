@@ -56,6 +56,10 @@ public final class Evaluator {
                     return (boolean) left && (boolean) right;
                 case LOGICAL_OR:
                     return (boolean) left || (boolean) right;
+                case EQUALS:
+                    return left.equals(right);
+                case NOT_EQUALS:
+                    return !left.equals(right);
                 default:
                     throw new IllegalArgumentException("Unexpected binary operator <" + b.getOperator().getKind() + ">");
             }
