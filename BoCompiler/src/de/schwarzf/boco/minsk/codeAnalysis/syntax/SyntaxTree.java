@@ -1,16 +1,16 @@
 package de.schwarzf.boco.minsk.codeAnalysis.syntax;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 public final class SyntaxTree {
     private SyntaxNode root;
     private SyntaxToken endOfFileToken;
-    private String[] diagnostics;
+    private ArrayList<String> diagnostics;
     public SyntaxTree(ArrayList<String> diagonstics, SyntaxNode root, SyntaxToken endOfFileToken) {
         this.root = root;
         this.endOfFileToken = endOfFileToken;
-        this.diagnostics = new String[diagonstics.size()];
-        this.diagnostics = diagonstics.toArray(this.diagnostics);
+        this.diagnostics = diagonstics;
     }
     public SyntaxNode getRoot() {
         return root;
@@ -18,7 +18,7 @@ public final class SyntaxTree {
     public SyntaxToken getEndOfFileToken() {
         return endOfFileToken;
     }
-    public String[] getDiagnostics() {
+    public Collection<? extends String> getDiagnostics() {
         return diagnostics;
     }
 

@@ -58,16 +58,10 @@ public class Main {
             }
 
             SyntaxTree syntaxTree = SyntaxTree.parse(line);
-            Binder binder = new Binder();
-            BoundExpression boundExpression = binder.bindExpression((ExpressionSyntax) syntaxTree.getRoot());
+            Compilation compilation = new Compilation(syntaxTree);
+            EvaluationResult result = compilation.evaluate();
 
-            ArrayList<String> diagnostics = new ArrayList<>();
-            for (String diagnostic : syntaxTree.getDiagnostics()) {
-                diagnostics.add(diagnostic);
-            }
-            for (String diagnostic : binder.getDiagnostics()) {
-                diagnostics.add(diagnostic);
-            }
+            ArrayList<String> diagnostics = result.getDiagnostics();
 
             if (showTree) {
                 prettyPrint(syntaxTree.getRoot(), "", true);
@@ -79,9 +73,7 @@ public class Main {
                 }
             }
             else {
-                Evaluator evaluator = new Evaluator(boundExpression);
-                Object result = evaluator.evaluate();
-                System.out.println("Result: " + ANSI_GREEN + result + ANSI_RESET);
+                System.out.println("Result: " + ANSI_GREEN + result.getValue() + ANSI_RESET);
             }
 
         }
