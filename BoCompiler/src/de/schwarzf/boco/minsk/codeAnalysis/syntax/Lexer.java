@@ -126,8 +126,10 @@ final class Lexer {
                 if (lookAhead() == '=') {
                     position += 2;
                     return new SyntaxToken(SyntaxKind.EQUALS_EQUALS_TOKEN, start, "==", null);
+                } else {
+                    position++;
+                    return new SyntaxToken(SyntaxKind.EQUALS_TOKEN, start, "=", null);
                 }
-                break;
             case '!':
                 if (lookAhead() == '=') {
                     position += 2;
@@ -139,7 +141,6 @@ final class Lexer {
 
         }
 
-        //this.diagnostics.add(String.format("LEXER ERROR: Bad character input: '%s'", getCurrent()));
         this.diagnostics.reportBadCharacter(position, getCurrent());
         return new SyntaxToken(SyntaxKind.BAD_TOKEN, position++, text.substring(position -1, position), null);
     }

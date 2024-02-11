@@ -6,6 +6,7 @@ import de.schwarzf.boco.minsk.codeAnalysis.syntax.ExpressionSyntax;
 import de.schwarzf.boco.minsk.codeAnalysis.syntax.SyntaxTree;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
 
 public final class Compilation {
     private final SyntaxTree syntax;
@@ -14,15 +15,15 @@ public final class Compilation {
         this.syntax = syntax;
     }
 
-    public EvaluationResult evaluate() {
-        Binder binder = new Binder();
+    public EvaluationResult evaluate(Dictionary<String, Object> variables) {
+        Binder binder = new Binder(variables);
         BoundExpression boundExpression = binder.bindExpression((ExpressionSyntax) syntax.getRoot());
 
         ArrayList<Diagnostic> allDiagnostics = new ArrayList<>();
         allDiagnostics.addAll(syntax.getDiagnostics());
         allDiagnostics.addAll(binder.getDiagnostics());
 
-        Evaluator evaluator = new Evaluator(boundExpression);
+        Evaluator evaluator = new Evaluator(boundExpression, variables);
         Object value = evaluator.evaluate();
 
         return new EvaluationResult(allDiagnostics, value);

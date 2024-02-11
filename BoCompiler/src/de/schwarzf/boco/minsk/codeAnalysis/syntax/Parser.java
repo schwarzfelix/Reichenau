@@ -66,17 +66,35 @@ final class Parser {
         return new SyntaxTree(this.diagnostics, expression, endOfFileToken);
     }
 
-    private ExpressionSyntax parseExpression() {
-        return parseExpression(0);
+    private ExpressionSyntax parseExpression(){
+        return ParseAssignmentExpression();
     }
-    private ExpressionSyntax parseExpression(int parentPrecedence) {
+
+    private ExpressionSyntax ParseAssignmentExpression(){
+
+        if (getPeek(0).getKind() == SyntaxKind.IDENTIFIER_TOKEN &&
+            getPeek(1).getKind() == SyntaxKind.EQUALS_TOKEN) {
+
+            SyntaxToken identifierToken = getNextToken();
+            SyntaxToken operatorToken = getNextToken();
+            ExpressionSyntax right = ParseAssignmentExpression();
+            return new AssignmentExpressionSyntax(identifierToken, operatorToken, right);
+        }
+
+        return parseBinaryExpression();
+    }
+
+    private ExpressionSyntax parseBinaryExpression() {
+        return parseBinaryExpression(0);
+    }
+    private ExpressionSyntax parseBinaryExpression(int parentPrecedence) {
 
          ExpressionSyntax left;
         int unaryOperatorPrecedence = SyntaxFacts.getUnaryOperatorPrecedence(getCurrent().getKind());
         if (unaryOperatorPrecedence != 0 && unaryOperatorPrecedence >= parentPrecedence) {
 
             SyntaxToken operatorToken = getNextToken();
-            ExpressionSyntax operand = parseExpression(unaryOperatorPrecedence);
+            ExpressionSyntax operand = parseBinaryExpression(unaryOperatorPrecedence);
             left = new UnaryExpressionSyntax(operatorToken, operand);
         }
         else {
@@ -90,7 +108,7 @@ final class Parser {
              }
 
                 SyntaxToken operatorToken = getNextToken();
-                ExpressionSyntax right = parseExpression(precedence);
+                ExpressionSyntax right = parseBinaryExpression(precedence);
                 left = new BinaryExpressionSyntax(left, operatorToken, right);
          }
 

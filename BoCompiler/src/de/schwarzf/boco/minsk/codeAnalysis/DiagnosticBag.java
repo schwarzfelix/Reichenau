@@ -33,4 +33,9 @@ public final class DiagnosticBag extends ArrayList<Diagnostic> {
         String message = String.format("Binary operator '%s' is not defined for types '%s' and '%s'.", text, leftType.getSimpleName(), rightType.getSimpleName());
         report(span, message);
     }
+
+    public void reportUndefinedName(TextSpan span, String name) {
+        String message = String.format("Variable '%s' doesn't exist.", name);
+        report(span, message);
+    }
 }

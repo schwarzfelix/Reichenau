@@ -9,6 +9,7 @@ import de.schwarzf.boco.minsk.codeAnalysis.syntax.SyntaxTree;
 import de.schwarzf.boco.minsk.codeAnalysis.binding.Binder;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
 
 public class Main {
 
@@ -34,6 +35,7 @@ public class Main {
 
         System.out.println("BoCo: SchwarzF's BoCompiler for the BoCode Programming Language");
         boolean showTree = false;
+        Dictionary<String, Object> variables = new java.util.Hashtable<>();
 
         while (true) {
 
@@ -59,7 +61,7 @@ public class Main {
 
             SyntaxTree syntaxTree = SyntaxTree.parse(line);
             Compilation compilation = new Compilation(syntaxTree);
-            EvaluationResult result = compilation.evaluate();
+            EvaluationResult result = compilation.evaluate(variables);
 
             ArrayList<Diagnostic> diagnostics = result.getDiagnostics();
 
