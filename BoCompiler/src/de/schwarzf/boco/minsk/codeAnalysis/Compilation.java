@@ -25,6 +25,6 @@ public final class Compilation {
         Evaluator evaluator = new Evaluator(boundExpression);
         Object value = evaluator.evaluate();
 
-        return new EvaluationResult(new ArrayList<Diagnostic>(), value);
+        return new EvaluationResult(allDiagnostics, value);
     }
 }
