@@ -18,16 +18,13 @@ public final class Compilation {
         Binder binder = new Binder();
         BoundExpression boundExpression = binder.bindExpression((ExpressionSyntax) syntax.getRoot());
 
-        ArrayList<String> allDiagnostics = new ArrayList<>();
+        ArrayList<Diagnostic> allDiagnostics = new ArrayList<>();
         allDiagnostics.addAll(syntax.getDiagnostics());
         allDiagnostics.addAll(binder.getDiagnostics());
-        if (allDiagnostics.size() > 0) {
-            return new EvaluationResult(allDiagnostics, 0);
-        }
 
         Evaluator evaluator = new Evaluator(boundExpression);
         Object value = evaluator.evaluate();
 
-        return new EvaluationResult(new ArrayList<String>(), value);
+        return new EvaluationResult(new ArrayList<Diagnostic>(), value);
     }
 }

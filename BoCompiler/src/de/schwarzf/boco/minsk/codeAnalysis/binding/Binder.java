@@ -1,15 +1,15 @@
 package de.schwarzf.boco.minsk.codeAnalysis.binding;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
+import de.schwarzf.boco.minsk.codeAnalysis.DiagnosticBag;
 import de.schwarzf.boco.minsk.codeAnalysis.syntax.*;
 
 import java.util.ArrayList;
 
 public class Binder {
 
-    private ArrayList<String> diagnostics = new ArrayList<>();
+    private DiagnosticBag diagnostics = new DiagnosticBag();
 
-    public ArrayList<String> getDiagnostics() {
+    public DiagnosticBag getDiagnostics() {
         return this.diagnostics;
     }
 
@@ -49,7 +49,7 @@ public class Binder {
         BoundUnaryOperator boundOperator = BoundUnaryOperator.bind(syntax.getOperatorToken().getKind(), boundOperand.getType());
 
         if (boundOperator == null) {
-            diagnostics.add("BINDER ERROR: Unary operator " + syntax.getOperatorToken().getText() + " is not defined for type " + boundOperand.getType() + ".");
+            diagnostics.reportUndefinedUnaryOperator(syntax.getOperatorToken().getSpan(), syntax.getOperatorToken().getText(), boundOperand.getType());
             return boundOperand;
         }
 
@@ -63,7 +63,7 @@ public class Binder {
         BoundBinaryOperator boundOperator = BoundBinaryOperator.bind(syntax.getOperatorToken().getKind(), boundLeft.getType(), boundRight.getType());
 
         if (boundOperator == null) {
-            diagnostics.add("BINDER ERROR: Binary operator " + syntax.getOperatorToken().getText() + " is not defined for types " + boundLeft.getType() + " and " + boundRight.getType() + ".");
+            diagnostics.reportUndefinedBinaryOperator(syntax.getOperatorToken().getSpan(), syntax.getOperatorToken().getText(), boundLeft.getType(), boundRight.getType());
             return boundLeft;
         }
 

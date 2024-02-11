@@ -61,14 +61,14 @@ public class Main {
             Compilation compilation = new Compilation(syntaxTree);
             EvaluationResult result = compilation.evaluate();
 
-            ArrayList<String> diagnostics = result.getDiagnostics();
+            ArrayList<Diagnostic> diagnostics = result.getDiagnostics();
 
             if (showTree) {
                 prettyPrint(syntaxTree.getRoot(), "", true);
             }
 
             if (diagnostics.size() > 0) {
-                for (String diagnostic : diagnostics) {
+                for (Diagnostic diagnostic : diagnostics) {
                     System.out.println(ANSI_RED + diagnostic + ANSI_RESET);
                 }
             }

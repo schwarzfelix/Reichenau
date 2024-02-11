@@ -2,6 +2,10 @@ package de.schwarzf.boco.minsk.codeAnalysis.syntax;
 
 // https://www.youtube.com/watch?v=wgHIkdUQbp0&list=PLRAdsfhKI4OWNOSfS7EUu5GRAVmze1t2y
 
+import de.schwarzf.boco.minsk.codeAnalysis.Diagnostic;
+import de.schwarzf.boco.minsk.codeAnalysis.DiagnosticBag;
+import de.schwarzf.boco.minsk.codeAnalysis.TextSpan;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -12,13 +16,13 @@ final class Lexer {
 
     private String text;
     private int position;
-    private ArrayList<String> diagnostics = new ArrayList<>();
+    private DiagnosticBag diagnostics = new DiagnosticBag();
 
     public Lexer (String text) {
         this.text = text;
     }
 
-    public ArrayList<String> getDiagnostics() {
+    public DiagnosticBag getDiagnostics() {
         return this.diagnostics;
     }
 
@@ -64,7 +68,7 @@ final class Lexer {
             try {
                 value = Integer.parseInt(text);
             } catch (NumberFormatException e) {
-                this.diagnostics.add(String.format("LEXER ERROR: The number %s is not a valid Int32.", text));
+                this.diagnostics.reportInvalidNumber(new TextSpan(start, length), text, Integer.class);
             }
 
             return new SyntaxToken(SyntaxKind.NUMBER_TOKEN, start, text, value);
@@ -131,7 +135,8 @@ final class Lexer {
 
         }
 
-        this.diagnostics.add(String.format("LEXER ERROR: Bad character input: '%s'", getCurrent()));
+        //this.diagnostics.add(String.format("LEXER ERROR: Bad character input: '%s'", getCurrent()));
+        this.diagnostics.reportBadCharacter(position, getCurrent());
         return new SyntaxToken(SyntaxKind.BAD_TOKEN, position++, text.substring(position -1, position), null);
     }
 }

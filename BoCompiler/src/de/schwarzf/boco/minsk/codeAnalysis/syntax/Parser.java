@@ -1,12 +1,15 @@
 package de.schwarzf.boco.minsk.codeAnalysis.syntax;
 
+import de.schwarzf.boco.minsk.codeAnalysis.Diagnostic;
+import de.schwarzf.boco.minsk.codeAnalysis.DiagnosticBag;
+
 import java.util.ArrayList;
 
 final class Parser {
 
     private SyntaxToken[] tokens;
     private int position;
-    private ArrayList<String> diagnostics = new ArrayList<>();
+    private DiagnosticBag diagnostics = new DiagnosticBag();
 
     public Parser(String text) {
         ArrayList<SyntaxToken> tokensList = new ArrayList<>();
@@ -27,7 +30,7 @@ final class Parser {
         this.diagnostics.addAll(lexer.getDiagnostics());
     }
 
-    public ArrayList<String> getDiagnostics() {
+    public DiagnosticBag getDiagnostics() {
         return this.diagnostics;
     }
 
@@ -53,7 +56,7 @@ final class Parser {
         if (getCurrent().getKind() == kind) {
             return getNextToken();
         }
-        this.diagnostics.add("PARSER ERROR: Unexpected token <" + getCurrent().getKind() + ">, expected <" + kind + ">");
+        this.diagnostics.reportUnexpectedToken(getCurrent().getSpan(), getCurrent().getKind(), kind);
         return new SyntaxToken(kind, getCurrent().getPosition(), null, null);
     }
 

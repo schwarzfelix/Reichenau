@@ -1,6 +1,8 @@
 package de.schwarzf.boco.minsk.codeAnalysis.syntax;
 
 
+import de.schwarzf.boco.minsk.codeAnalysis.TextSpan;
+
 import java.util.Collections;
 
 public final class SyntaxToken extends SyntaxNode{
@@ -36,5 +38,9 @@ public final class SyntaxToken extends SyntaxNode{
 
     public Integer getValue() {
         return value;
+    }
+
+    public TextSpan getSpan() {
+        return new TextSpan(position, text.length());
     }
 }
