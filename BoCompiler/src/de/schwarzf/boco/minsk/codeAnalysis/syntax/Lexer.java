@@ -53,10 +53,11 @@ final class Lexer {
             return new SyntaxToken(SyntaxKind.END_OF_FILE_TOKEN, position, "\0", null);
         }
 
+        int start = position;
+
         Set<Character> digits = new HashSet<>();
         digits.addAll(Arrays.asList('0','1','2','3','4','5','6','7','8','9'));
         if (digits.contains(getCurrent())) {
-            int start = position;
             while (digits.contains(getCurrent())) {
                 nextChar();
             }
@@ -76,7 +77,6 @@ final class Lexer {
 
         // whitespace and newlines
         if (getCurrent() == ' ' || getCurrent() == '\r' || getCurrent() == '\n') {
-            int start = position;
             while (getCurrent() == ' ' || getCurrent() == '\r' || getCurrent() == '\n') {
                 nextChar();
             }
@@ -87,7 +87,6 @@ final class Lexer {
 
         // letters and keywords
         if (Character.isLetter(getCurrent())) {
-            int start = position;
             while (Character.isLetter(getCurrent())) {
                 nextChar();
             }
@@ -113,24 +112,29 @@ final class Lexer {
 
             case '&':
                 if (lookAhead() == '&') {
-                    return new SyntaxToken(SyntaxKind.AMPERSAND_AMPERSAND_TOKEN, position += 2, "&&", null);
+                    position += 2;
+                    return new SyntaxToken(SyntaxKind.AMPERSAND_AMPERSAND_TOKEN, start, "&&", null);
                 }
                 break;
             case '|':
                 if (lookAhead() == '|') {
-                    return new SyntaxToken(SyntaxKind.PIPE_PIPE_TOKEN, position += 2, "||", null);
+                    position += 2;
+                    return new SyntaxToken(SyntaxKind.PIPE_PIPE_TOKEN, start, "||", null);
                 }
                 break;
             case '=':
                 if (lookAhead() == '=') {
-                    return new SyntaxToken(SyntaxKind.EQUALS_EQUALS_TOKEN, position += 2, "==", null);
+                    position += 2;
+                    return new SyntaxToken(SyntaxKind.EQUALS_EQUALS_TOKEN, start, "==", null);
                 }
                 break;
             case '!':
                 if (lookAhead() == '=') {
-                    return new SyntaxToken(SyntaxKind.BANG_EQUALS_TOKEN, position += 2, "!=", null);
+                    position += 2;
+                    return new SyntaxToken(SyntaxKind.BANG_EQUALS_TOKEN, start, "!=", null);
                 } else {
-                    return new SyntaxToken(SyntaxKind.BANG_TOKEN, position++, "!", null);
+                    position++;
+                    return new SyntaxToken(SyntaxKind.BANG_TOKEN, start, "!", null);
                 }
 
         }
