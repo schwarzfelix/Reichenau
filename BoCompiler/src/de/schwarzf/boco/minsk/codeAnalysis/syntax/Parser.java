@@ -89,7 +89,7 @@ final class Parser {
     }
     private ExpressionSyntax parseBinaryExpression(int parentPrecedence) {
 
-         ExpressionSyntax left;
+        ExpressionSyntax left;
         int unaryOperatorPrecedence = SyntaxFacts.getUnaryOperatorPrecedence(getCurrent().getKind());
         if (unaryOperatorPrecedence != 0 && unaryOperatorPrecedence >= parentPrecedence) {
 
