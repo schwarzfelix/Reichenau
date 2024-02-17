@@ -130,6 +130,9 @@ final class Parser {
                 SyntaxToken keywordToken = getNextToken();
                 boolean value = keywordToken.getKind() == SyntaxKind.TRUE_KEYWORD;
                 return new LiteralExpressionSyntax(keywordToken, value);
+            case IDENTIFIER_TOKEN:
+                SyntaxToken identifierToken = getNextToken();
+                return new NameExpressionSyntax(identifierToken);
             default:
                 SyntaxToken numberToken = matchToken(SyntaxKind.NUMBER_TOKEN);
                 return new LiteralExpressionSyntax(numberToken);
