@@ -43,6 +43,20 @@ public class Binder {
     private BoundExpression bindAssignmentExpression(AssignmentExpressionSyntax syntax) {
         String name = syntax.getIdentifierToken().getText();
         BoundExpression boundExpression = bindExpression(syntax.getExpression());
+
+        // set default value based on type
+        Object defaultValue = null;
+        if(boundExpression.getType() == Integer.class){
+            defaultValue = 0;
+        } else if(boundExpression.getType() == Boolean.class){
+            defaultValue = false;
+        }
+
+        if (defaultValue == null) {
+            throw new IllegalArgumentException("Unsupported type: " + boundExpression.getType());
+        }
+
+        variables.put(name, defaultValue);
         return new BoundAssignmentExpression(name, boundExpression);
     }
 
@@ -55,8 +69,8 @@ public class Binder {
             return new BoundLiteralExpression(0);
         }
 
-        //return new BoundVariableExpression(name, value.getClass());
-        return new BoundVariableExpression(name, Integer.class);
+        return new BoundVariableExpression(name, value.getClass());
+        //return new BoundVariableExpression(name, Integer.class);
     }
 
     private BoundExpression bindParenthesizedExpression(ParenthesizedExpressionSyntax syntax) {
