@@ -1,17 +1,17 @@
 package de.schwarzf.boco.minsk.codeAnalysis.binding;
 
 import de.schwarzf.boco.minsk.codeAnalysis.DiagnosticBag;
+import de.schwarzf.boco.minsk.codeAnalysis.VariableSymbol;
 import de.schwarzf.boco.minsk.codeAnalysis.syntax.*;
 
-import java.util.ArrayList;
-import java.util.Dictionary;
+import java.util.HashMap;
 
 public class Binder {
 
-    private Dictionary<String, Object> variables;
+    private HashMap<VariableSymbol, Object> variables;
     private DiagnosticBag diagnostics = new DiagnosticBag();
 
-    public Binder(Dictionary<String, Object> variables){
+    public Binder(HashMap<VariableSymbol, Object> variables){
         this.variables = variables;
     }
 
@@ -41,36 +41,41 @@ public class Binder {
     }
 
     private BoundExpression bindAssignmentExpression(AssignmentExpressionSyntax syntax) {
+
         String name = syntax.getIdentifierToken().getText();
         BoundExpression boundExpression = bindExpression(syntax.getExpression());
 
-        // set default value based on type
-        Object defaultValue = null;
-        if(boundExpression.getType() == Integer.class){
-            defaultValue = 0;
-        } else if(boundExpression.getType() == Boolean.class){
-            defaultValue = false;
+        for (VariableSymbol v : variables.keySet()) {
+            if (v.getName().equals(name)) {
+                variables.remove(v);
+                break;
+            }
         }
 
-        if (defaultValue == null) {
-            throw new IllegalArgumentException("Unsupported type: " + boundExpression.getType());
-        }
+        VariableSymbol variable = new VariableSymbol(name, boundExpression.getType());
+        variables.put(variable, null);
 
-        variables.put(name, defaultValue);
-        return new BoundAssignmentExpression(name, boundExpression);
+        return new BoundAssignmentExpression(variable, boundExpression);
     }
 
     private BoundExpression bindNameExpression(NameExpressionSyntax syntax) {
-        String name = syntax.getIdentifierToken().getText();
-        Object value = variables.get(name);
 
-        if(value == null){
+        String name = syntax.getIdentifierToken().getText();
+
+        VariableSymbol variable = null;
+        for (VariableSymbol v : variables.keySet()) {
+            if (v.getName().equals(name)) {
+                variable = v;
+                break;
+            }
+        }
+
+        if(variable == null){
             diagnostics.reportUndefinedName(syntax.getIdentifierToken().getSpan(), name);
             return new BoundLiteralExpression(0);
         }
 
-        return new BoundVariableExpression(name, value.getClass());
-        //return new BoundVariableExpression(name, Integer.class);
+        return new BoundVariableExpression(variable);
     }
 
     private BoundExpression bindParenthesizedExpression(ParenthesizedExpressionSyntax syntax) {

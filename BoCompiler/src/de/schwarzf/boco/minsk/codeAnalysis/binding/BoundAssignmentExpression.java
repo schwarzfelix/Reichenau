@@ -1,11 +1,13 @@
 package de.schwarzf.boco.minsk.codeAnalysis.binding;
 
+import de.schwarzf.boco.minsk.codeAnalysis.VariableSymbol;
+
 public final class BoundAssignmentExpression extends BoundExpression {
-    private String name;
+    private VariableSymbol variable;
     private BoundExpression expression;
 
-    public BoundAssignmentExpression(String name, BoundExpression expression) {
-        this.name = name;
+    public BoundAssignmentExpression(VariableSymbol variable, BoundExpression expression) {
+        this.variable = variable;
         this.expression = expression;
     }
 
@@ -19,8 +21,8 @@ public final class BoundAssignmentExpression extends BoundExpression {
         return this.expression.getType();
     }
 
-    public String getName() {
-        return name;
+    public VariableSymbol getVariable() {
+        return this.variable;
     }
 
     public BoundExpression getExpression() {

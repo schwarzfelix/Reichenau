@@ -1,15 +1,13 @@
 package de.schwarzf.boco.minsk.codeAnalysis;
 
 import de.schwarzf.boco.minsk.codeAnalysis.binding.*;
-import de.schwarzf.boco.minsk.codeAnalysis.syntax.*;
-
-import java.util.Dictionary;
+import java.util.HashMap;
 
 public final class Evaluator {
     private BoundExpression root;
-    private Dictionary<String, Object> variables;
+    private HashMap<VariableSymbol, Object> variables;
 
-    public Evaluator(BoundExpression root, Dictionary<String, Object> variables) {
+    public Evaluator(BoundExpression root, HashMap<VariableSymbol, Object> variables) {
         this.root = root;
         this.variables = variables;
     }
@@ -25,13 +23,13 @@ public final class Evaluator {
 
         if (node instanceof BoundVariableExpression) {
             BoundVariableExpression v = (BoundVariableExpression) node;
-            return this.variables.get(v.getName());
+            return this.variables.get(v.getVariable());
         }
 
         if (node instanceof BoundAssignmentExpression) {
             BoundAssignmentExpression a = (BoundAssignmentExpression) node;
             Object value = evaluateExpression(a.getExpression());
-            this.variables.put(a.getName(), value);
+            this.variables.put(a.getVariable(), value);
             return value;
         }
 

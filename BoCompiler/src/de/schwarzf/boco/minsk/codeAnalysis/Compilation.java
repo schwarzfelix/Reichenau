@@ -6,7 +6,7 @@ import de.schwarzf.boco.minsk.codeAnalysis.syntax.ExpressionSyntax;
 import de.schwarzf.boco.minsk.codeAnalysis.syntax.SyntaxTree;
 
 import java.util.ArrayList;
-import java.util.Dictionary;
+import java.util.HashMap;
 
 public final class Compilation {
     private final SyntaxTree syntax;
@@ -15,7 +15,7 @@ public final class Compilation {
         this.syntax = syntax;
     }
 
-    public EvaluationResult evaluate(Dictionary<String, Object> variables) {
+    public EvaluationResult evaluate(HashMap<VariableSymbol, Object> variables) {
         Binder binder = new Binder(variables);
         BoundExpression boundExpression = binder.bindExpression((ExpressionSyntax) syntax.getRoot());
 

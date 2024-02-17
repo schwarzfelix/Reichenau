@@ -1,15 +1,13 @@
 package de.schwarzf.boco.minsk;
 
 import de.schwarzf.boco.minsk.codeAnalysis.*;
-import de.schwarzf.boco.minsk.codeAnalysis.binding.BoundExpression;
-import de.schwarzf.boco.minsk.codeAnalysis.syntax.ExpressionSyntax;
 import de.schwarzf.boco.minsk.codeAnalysis.syntax.SyntaxNode;
 import de.schwarzf.boco.minsk.codeAnalysis.syntax.SyntaxToken;
 import de.schwarzf.boco.minsk.codeAnalysis.syntax.SyntaxTree;
-import de.schwarzf.boco.minsk.codeAnalysis.binding.Binder;
 
 import java.util.ArrayList;
-import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.Scanner;
 
 public class Main {
 
@@ -35,14 +33,14 @@ public class Main {
 
         System.out.println("BoCo: SchwarzF's BoCompiler for the BoCode Programming Language");
         boolean showTree = false;
-        Dictionary<String, Object> variables = new java.util.Hashtable<>();
+        HashMap<VariableSymbol, Object> variables = new HashMap<>();
 
         while (true) {
 
             System.out.println("―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――");
             System.out.print("> ");
 
-            java.util.Scanner scanner = new java.util.Scanner(System.in);
+            Scanner scanner = new Scanner(System.in);
             String line = scanner.nextLine();
 
             if (line.equals("#exit")) {
