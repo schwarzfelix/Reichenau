@@ -1,11 +1,12 @@
 package de.schwarzf.boco.minsk.codeAnalysis.syntax;
 
-import java.sql.Array;
+import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class LexerTest {
+class LexerTests {
 
         public static ArrayList<SyntaxKind> tokenKinds;
         public static ArrayList<String> tokenTexts;
@@ -69,8 +70,8 @@ class LexerTest {
 
         }
 
-        @org.junit.jupiter.api.Test
-        void lexerLexesTokens(){
+        @Test
+        void lexesTokens(){
             fillTokenList();
 
             for (int i = 0; i < tokenKinds.size(); i++) {
@@ -89,14 +90,14 @@ class LexerTest {
             assertEquals(text, token.getText());
         }
 
-        @org.junit.jupiter.api.Test
-        void lexerLexesTokenPairs(){
+        @Test
+        void lexesTokenPairs(){
             fillTokenList();
 
             for (int i = 0; i < tokenKinds.size(); i++) {
                 for (int j = 0; j < tokenKinds.size(); j++) {
                     if (!requriresSeperator(tokenKinds.get(i), tokenKinds.get(j))) {
-                        lexerLexesTokenPair(tokenKinds.get(i), tokenTexts.get(i), tokenKinds.get(j), tokenTexts.get(j));
+                        lexesTokenPair(tokenKinds.get(i), tokenTexts.get(i), tokenKinds.get(j), tokenTexts.get(j));
                     }
                 }
             }
@@ -166,7 +167,7 @@ class LexerTest {
             return false;
         }
 
-        void lexerLexesTokenPair(SyntaxKind t1kind, String t1text, SyntaxKind t2kind, String t2text) {
+        void lexesTokenPair(SyntaxKind t1kind, String t1text, SyntaxKind t2kind, String t2text) {
             ArrayList<SyntaxToken> tokens = (ArrayList<SyntaxToken>) SyntaxTree.parseTokens(t1text + t2text);
 
             assertEquals(2, tokens.size());
@@ -181,5 +182,6 @@ class LexerTest {
         }
 
         // TODO implement e4 44m - test zwo tokens with separator in between
+        // TODO rename files LexerTest.java and ParserTest.java to LexerTests.java and ParserTests.java etc e4 65m
 
 }

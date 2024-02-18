@@ -41,4 +41,39 @@ public class SyntaxFacts {
                 return SyntaxKind.IDENTIFIER_TOKEN;
         }
     }
+
+    public static String getText(SyntaxKind kind) {
+        switch (kind) {
+            case TRUE_KEYWORD:
+                return "true";
+            case FALSE_KEYWORD:
+                return "false";
+            case PLUS_TOKEN:
+                return "+";
+            case MINUS_TOKEN:
+                return "-";
+            case STAR_TOKEN:
+                return "*";
+            case SLASH_TOKEN:
+                return "/";
+            case BANG_TOKEN:
+                return "!";
+            case AMPERSAND_AMPERSAND_TOKEN:
+                return "&&";
+            case EQUALS_EQUALS_TOKEN:
+                return "==";
+            case BANG_EQUALS_TOKEN:
+                return "!=";
+            case EQUALS_TOKEN:
+                return "=";
+            case PIPE_PIPE_TOKEN:
+                return "||";
+            case OPEN_PARENTHESIS_TOKEN:
+                return "(";
+            case CLOSE_PARENTHESIS_TOKEN:
+                    return ")";
+            default:
+                return null;
+        }
+    }
 }
