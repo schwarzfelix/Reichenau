@@ -1,5 +1,7 @@
 package de.schwarzf.boco.minsk.codeAnalysis.syntax;
 
+import java.util.ArrayList;
+
 public class SyntaxFacts {
     public static int getUnaryOperatorPrecedence(SyntaxKind kind) {
         switch (kind) {
@@ -75,5 +77,27 @@ public class SyntaxFacts {
             default:
                 return null;
         }
+    }
+
+    public static ArrayList<SyntaxKind> getBinaryOperatorKinds() {
+        SyntaxKind[] kinds = SyntaxKind.values();
+        ArrayList<SyntaxKind> binaryOperators = new ArrayList<>();
+        for (SyntaxKind k : kinds) {
+            if (getBinaryOperatorPrecedence(k) > 0) {
+                binaryOperators.add(k);
+            }
+        }
+        return binaryOperators;
+    }
+
+    public static ArrayList<SyntaxKind> getUnaryOperatorKinds() {
+        SyntaxKind[] kinds = SyntaxKind.values();
+        ArrayList<SyntaxKind> unaryOperators = new ArrayList<>();
+        for (SyntaxKind k : kinds) {
+            if (getUnaryOperatorPrecedence(k) > 0) {
+                unaryOperators.add(k);
+            }
+        }
+        return unaryOperators;
     }
 }
