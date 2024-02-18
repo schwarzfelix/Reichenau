@@ -28,4 +28,17 @@ public final class SyntaxTree {
         Parser parser = new Parser(text);
         return parser.parse();
     }
+
+    public static Collection<SyntaxToken> parseTokens(String text) {
+        Lexer lexer = new Lexer(text);
+        ArrayList<SyntaxToken> tokens = new ArrayList<>();
+        while (true) {
+            SyntaxToken token = lexer.lex();
+            if (token.getKind() == SyntaxKind.END_OF_FILE_TOKEN) {
+                break;
+            }
+            tokens.add(token);
+        }
+        return tokens;
+    }
 }
