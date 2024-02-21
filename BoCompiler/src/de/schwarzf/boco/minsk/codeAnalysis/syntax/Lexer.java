@@ -14,12 +14,22 @@ import java.util.Arrays;
 
 final class Lexer {
 
+    private static final Set<Character> digits = new HashSet<>();
+
     private String text;
-    private int position;
     private DiagnosticBag diagnostics = new DiagnosticBag();
+
+    private int position;
+
+    private int start;
+    private SyntaxKind kind;
+    private Object value;
+
 
     public Lexer (String text) {
         this.text = text;
+
+        digits.addAll(Arrays.asList('0','1','2','3','4','5','6','7','8','9'));
     }
 
     public DiagnosticBag getDiagnostics() {
@@ -49,99 +59,143 @@ final class Lexer {
     // nextToken()/lex() is the heart of the lexer
     public SyntaxToken lex(){
 
-        if (position >= text.length() || getCurrent() == '\0') {
-            return new SyntaxToken(SyntaxKind.END_OF_FILE_TOKEN, position, "\0", null);
-        }
+        this.start = this.position;
+        this.kind = SyntaxKind.BAD_TOKEN;
+        this.value = null;
 
-        int start = position;
-
-        Set<Character> digits = new HashSet<>();
-        digits.addAll(Arrays.asList('0','1','2','3','4','5','6','7','8','9'));
         if (digits.contains(getCurrent())) {
-            while (digits.contains(getCurrent())) {
-                nextChar();
-            }
-            int length = position - start;
-            String text = this.text.substring(start, start + length);
 
-            int value = 0;
+            readNumberToken();
 
-            try {
-                value = Integer.parseInt(text);
-            } catch (NumberFormatException e) {
-                this.diagnostics.reportInvalidNumber(new TextSpan(start, length), text, Integer.class);
-            }
+        } else if (getCurrent() == ' ' || getCurrent() == '\r' || getCurrent() == '\n') {
 
-            return new SyntaxToken(SyntaxKind.NUMBER_TOKEN, start, text, value);
-        }
+            readWhiteSpace();
 
-        // whitespace and newlines
-        if (getCurrent() == ' ' || getCurrent() == '\r' || getCurrent() == '\n') {
-            while (getCurrent() == ' ' || getCurrent() == '\r' || getCurrent() == '\n') {
-                nextChar();
-            }
-            int length = position - start;
-            String text = this.text.substring(start, start + length);
-            return new SyntaxToken(SyntaxKind.WHITESPACE, start, text, null);
-        }
+        } else if (Character.isLetter(getCurrent())) {
 
-        // letters and keywords
-        if (Character.isLetter(getCurrent())) {
-            while (Character.isLetter(getCurrent())) {
-                nextChar();
-            }
-            int length = position - start;
-            String text = this.text.substring(start, start + length);
-            SyntaxKind kind = SyntaxFacts.getKeywordKind(text);
-            return new SyntaxToken(kind, start, text, null);
-        }
+            readIdentifierOrKeyword();
 
-        switch (getCurrent()) {
-            case '+':
-                return new SyntaxToken(SyntaxKind.PLUS_TOKEN, position++, "+", null);
-            case '-':
-                return new SyntaxToken(SyntaxKind.MINUS_TOKEN, position++, "-", null);
-            case '*':
-                return new SyntaxToken(SyntaxKind.STAR_TOKEN, position++, "*", null);
-            case '/':
-                return new SyntaxToken(SyntaxKind.SLASH_TOKEN, position++, "/", null);
-            case '(':
-                return new SyntaxToken(SyntaxKind.OPEN_PARENTHESIS_TOKEN, position++, "(", null);
-            case ')':
-                return new SyntaxToken(SyntaxKind.CLOSE_PARENTHESIS_TOKEN, position++, ")", null);
+        } else {
 
-            case '&':
-                if (lookAhead() == '&') {
-                    position += 2;
-                    return new SyntaxToken(SyntaxKind.AMPERSAND_AMPERSAND_TOKEN, start, "&&", null);
-                }
-                break;
-            case '|':
-                if (lookAhead() == '|') {
-                    position += 2;
-                    return new SyntaxToken(SyntaxKind.PIPE_PIPE_TOKEN, start, "||", null);
-                }
-                break;
-            case '=':
-                if (lookAhead() == '=') {
-                    position += 2;
-                    return new SyntaxToken(SyntaxKind.EQUALS_EQUALS_TOKEN, start, "==", null);
-                } else {
+            switch (getCurrent()) {
+                case '\0':
+                    this.kind = SyntaxKind.END_OF_FILE_TOKEN;
                     position++;
-                    return new SyntaxToken(SyntaxKind.EQUALS_TOKEN, start, "=", null);
-                }
-            case '!':
-                if (lookAhead() == '=') {
-                    position += 2;
-                    return new SyntaxToken(SyntaxKind.BANG_EQUALS_TOKEN, start, "!=", null);
-                } else {
+                    break;
+                case '+':
+                    this.kind = SyntaxKind.PLUS_TOKEN;
                     position++;
-                    return new SyntaxToken(SyntaxKind.BANG_TOKEN, start, "!", null);
-                }
+                    break;
+                case '-':
+                    this.kind = SyntaxKind.MINUS_TOKEN;
+                    position++;
+                    break;
+                case '*':
+                    this.kind = SyntaxKind.STAR_TOKEN;
+                    position++;
+                    break;
+                case '/':
+                    this.kind = SyntaxKind.SLASH_TOKEN;
+                    position++;
+                    break;
+                case '(':
+                    this.kind = SyntaxKind.OPEN_PARENTHESIS_TOKEN;
+                    position++;
+                    break;
+                case ')':
+                    this.kind = SyntaxKind.CLOSE_PARENTHESIS_TOKEN;
+                    position++;
+                    break;
+
+                case '&':
+                    if (lookAhead() == '&') {
+                        this.kind = SyntaxKind.AMPERSAND_AMPERSAND_TOKEN;
+                        position += 2;
+                        break;
+                    }
+                    break;
+                case '|':
+                    if (lookAhead() == '|') {
+                        this.kind = SyntaxKind.PIPE_PIPE_TOKEN;
+                        position += 2;
+                        break;
+                    }
+                    break;
+                case '=':
+                    if (lookAhead() == '=') {
+                        this.kind = SyntaxKind.EQUALS_EQUALS_TOKEN;
+                        position += 2;
+                        break;
+                    } else {
+                        this.kind = SyntaxKind.EQUALS_TOKEN;
+                        position++;
+                        break;
+                    }
+                case '!':
+                    if (lookAhead() == '=') {
+                        this.kind = SyntaxKind.BANG_EQUALS_TOKEN;
+                        position += 2;
+                        break;
+                    } else {
+                        this.kind = SyntaxKind.BANG_TOKEN;
+                        position++;
+                        break;
+                    }
+                default:
+                    this.diagnostics.reportBadCharacter(position, getCurrent());
+                    this.position++;
+                    break;
+            }
 
         }
 
-        this.diagnostics.reportBadCharacter(position, getCurrent());
-        return new SyntaxToken(SyntaxKind.BAD_TOKEN, position++, text.substring(position -1, position), null);
+        int length = this.position - this.start;
+        String text = SyntaxFacts.getText(this.kind);
+        if (text == null) {
+            text = this.text.substring(start, length);
+        }
+
+        return new SyntaxToken(this.kind, this.start, text, (int)this.value);
+    }
+
+    private void readIdentifierOrKeyword() {
+        while (Character.isLetter(getCurrent())) {
+            nextChar();
+        }
+
+        int length = position - start;
+        String text = this.text.substring(start, start + length);
+
+        this.kind = SyntaxFacts.getKeywordKind(text);
+    }
+
+    private void readWhiteSpace() {
+
+        while (getCurrent() == ' ' || getCurrent() == '\r' || getCurrent() == '\n') {
+            nextChar();
+        }
+
+        this.kind = SyntaxKind.WHITESPACE;
+
+    }
+
+    private void readNumberToken(){
+
+        while (digits.contains(getCurrent())) {
+            nextChar();
+        }
+        int length = position - start;
+        String text = this.text.substring(start, start + length);
+
+        int value = 0;
+
+        try {
+            value = Integer.parseInt(text);
+        } catch (NumberFormatException e) {
+            this.diagnostics.reportInvalidNumber(new TextSpan(start, length), text, Integer.class);
+        }
+
+        this.value = value;
+        this.kind = SyntaxKind.NUMBER_TOKEN;
     }
 }
