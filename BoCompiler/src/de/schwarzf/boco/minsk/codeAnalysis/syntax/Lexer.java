@@ -91,6 +91,7 @@ final class Lexer {
                 break;
 
             case '&':
+                // lookahead/current different than e5 00:00:00 - 00:30:00
                 if (lookAhead() == '&') {
                     this.kind = SyntaxKind.AMPERSAND_AMPERSAND_TOKEN;
                     position += 2;
