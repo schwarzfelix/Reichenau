@@ -19,6 +19,8 @@ class LexerTests {
 
         public static void fillTokenList(){
 
+            // TODO test adds in e5 00:39:00 - 2 additional tests
+
             tokenKinds = new ArrayList<>();
             tokenTexts = new ArrayList<>();
 
