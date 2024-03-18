@@ -138,7 +138,7 @@ final class Parser {
     }
 
     private ParenthesizedExpressionSyntax parseParenthesizedExpression() {
-        SyntaxToken left = getNextToken();
+        SyntaxToken left = matchToken(SyntaxKind.OPEN_PARENTHESIS_TOKEN);
         ExpressionSyntax expression = parseExpression();
         SyntaxToken right = matchToken(SyntaxKind.CLOSE_PARENTHESIS_TOKEN);
         return new ParenthesizedExpressionSyntax(left, expression, right);
