@@ -4,6 +4,7 @@ import de.schwarzf.boco.minsk.codeAnalysis.*;
 import de.schwarzf.boco.minsk.codeAnalysis.syntax.SyntaxNode;
 import de.schwarzf.boco.minsk.codeAnalysis.syntax.SyntaxToken;
 import de.schwarzf.boco.minsk.codeAnalysis.syntax.SyntaxTree;
+import de.schwarzf.boco.synthesis.Synthesizer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,6 +34,7 @@ public class Main {
 
         System.out.println("BoCo: SchwarzF's BoCompiler for the BoCode Programming Language");
         boolean showTree = false;
+        boolean synthesize = false;
         HashMap<VariableSymbol, Object> variables = new HashMap<>();
 
         while (true) {
@@ -51,6 +53,11 @@ public class Main {
                 System.out.println("Show parse tree: " + showTree);
                 continue;
             }
+            else if (line.equals("#synth")) {
+                synthesize = !synthesize;
+                System.out.println("Synthesize: " + synthesize);
+                continue;
+            }
             else if (line.equals("#clear")) {
                 System.out.print("\033[H\033[2J");
                 System.out.flush();
@@ -65,6 +72,11 @@ public class Main {
 
             if (showTree) {
                 prettyPrint(syntaxTree.getRoot(), "", true);
+            }
+
+            if (synthesize) {
+                Synthesizer synthesizer = new Synthesizer(syntaxTree);
+                System.out.println(synthesizer.synthesize());
             }
 
             if (diagnostics.size() > 0) {
