@@ -4,7 +4,7 @@ import de.schwarzf.boco.minsk.codeAnalysis.*;
 import de.schwarzf.boco.minsk.codeAnalysis.syntax.SyntaxNode;
 import de.schwarzf.boco.minsk.codeAnalysis.syntax.SyntaxToken;
 import de.schwarzf.boco.minsk.codeAnalysis.syntax.SyntaxTree;
-import de.schwarzf.boco.synthesis.Synthesizer;
+import de.schwarzf.boco.synthesis.JavaSynthesizer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -75,7 +75,7 @@ public class Main {
             }
 
             if (synthesize) {
-                Synthesizer synthesizer = new Synthesizer(syntaxTree);
+                JavaSynthesizer synthesizer = new JavaSynthesizer(syntaxTree);
                 System.out.println(synthesizer.synthesize());
             }
 
