@@ -4,27 +4,27 @@ import de.schwarzf.reichenau.codeAnalysis.binding.BoundBinaryOperatorKind;
 import de.schwarzf.reichenau.codeAnalysis.binding.BoundUnaryOperatorKind;
 
 public abstract class IntermediateCodeNode {
-    public abstract IntermediateCodeKind getKind();
+    public abstract IntermediateCodeNodeKind getKind();
     public abstract String toString();
 
-    public static IntermediateCodeKind getIntermediateCodeKind(BoundBinaryOperatorKind kind) {
+    public static IntermediateCodeNodeKind getIntermediateCodeKind(BoundBinaryOperatorKind kind) {
         return switch (kind) {
-            case ADDITION -> IntermediateCodeKind.ADDITION;
-            case SUBTRACTION -> IntermediateCodeKind.SUBTRACTION;
-            case MULTIPLICATION -> IntermediateCodeKind.MULTIPLICATION;
-            case DIVISION -> IntermediateCodeKind.DIVISION;
-            case LOGICAL_AND -> IntermediateCodeKind.LOGICAL_AND;
-            case LOGICAL_OR -> IntermediateCodeKind.LOGICAL_OR;
-            case EQUALS -> IntermediateCodeKind.EQUALS;
-            case NOT_EQUALS -> IntermediateCodeKind.NOT_EQUALS;
+            case ADDITION -> IntermediateCodeNodeKind.ADDITION;
+            case SUBTRACTION -> IntermediateCodeNodeKind.SUBTRACTION;
+            case MULTIPLICATION -> IntermediateCodeNodeKind.MULTIPLICATION;
+            case DIVISION -> IntermediateCodeNodeKind.DIVISION;
+            case LOGICAL_AND -> IntermediateCodeNodeKind.LOGICAL_AND;
+            case LOGICAL_OR -> IntermediateCodeNodeKind.LOGICAL_OR;
+            case EQUALS -> IntermediateCodeNodeKind.EQUALS;
+            case NOT_EQUALS -> IntermediateCodeNodeKind.NOT_EQUALS;
         };
     }
 
-    public static IntermediateCodeKind getIntermediateCodeKind(BoundUnaryOperatorKind kind) {
+    public static IntermediateCodeNodeKind getIntermediateCodeKind(BoundUnaryOperatorKind kind) {
         return switch (kind) {
-            case IDENTITY -> IntermediateCodeKind.IDENTITY;
-            case NEGATION -> IntermediateCodeKind.NEGATION;
-            case LOGICAL_NEGATION -> IntermediateCodeKind.LOGICAL_NEGATION;
+            case IDENTITY -> IntermediateCodeNodeKind.IDENTITY;
+            case NEGATION -> IntermediateCodeNodeKind.NEGATION;
+            case LOGICAL_NEGATION -> IntermediateCodeNodeKind.LOGICAL_NEGATION;
         };
     }
 }

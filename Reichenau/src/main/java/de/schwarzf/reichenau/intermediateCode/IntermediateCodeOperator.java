@@ -2,14 +2,14 @@ package de.schwarzf.reichenau.intermediateCode;
 
 public class IntermediateCodeOperator extends IntermediateCodeNode {
 
-    private IntermediateCodeKind operator;
+    private IntermediateCodeNodeKind operator;
 
-    public IntermediateCodeOperator(IntermediateCodeKind operator) {
+    public IntermediateCodeOperator(IntermediateCodeNodeKind operator) {
         this.operator = operator;
     }
 
     @Override
-    public IntermediateCodeKind getKind() {
+    public IntermediateCodeNodeKind getKind() {
         return operator;
     }
 

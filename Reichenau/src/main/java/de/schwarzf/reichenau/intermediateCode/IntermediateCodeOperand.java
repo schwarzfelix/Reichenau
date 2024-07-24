@@ -1,7 +1,5 @@
 package de.schwarzf.reichenau.intermediateCode;
 
-import de.schwarzf.reichenau.codeAnalysis.binding.BoundNodeKind;
-
 public class IntermediateCodeOperand extends IntermediateCodeNode {
     private final Object value;
 
@@ -10,8 +8,8 @@ public class IntermediateCodeOperand extends IntermediateCodeNode {
     }
 
     @Override
-    public IntermediateCodeKind getKind() {
-        return IntermediateCodeKind.OPERAND;
+    public IntermediateCodeNodeKind getKind() {
+        return IntermediateCodeNodeKind.OPERAND;
     }
 
     public Object getValue() {
