@@ -1,27 +1,19 @@
-package de.schwarzf.synthesis;
+package de.schwarzf.reichenau.codeSynthesis;
 
 import de.schwarzf.reichenau.codeAnalysis.binding.*;
 import de.schwarzf.reichenau.codeAnalysis.syntax.SyntaxTree;
 
 
-public final class JavaSynthesizer extends Synthesizer {
+public final class PythonSynthesizer extends Synthesizer {
 
-    public JavaSynthesizer(SyntaxTree syntax) {
+    public PythonSynthesizer(SyntaxTree syntax) {
         super(syntax);
     }
 
     public String synthesize() {
 
-        String prefix = """
-import java.util.HashMap;
-public class Export {
-    public static void main(String[] args) {
-        //HashMap<String, Object> variables;
-        System.out.println(
-""";
-        String suffix = """
-                ) ; } }
-""";
+        String prefix = "print(str(";
+        String suffix = "))";
 
         return prefix + synthesizeExpression(this.root) + suffix;
     }

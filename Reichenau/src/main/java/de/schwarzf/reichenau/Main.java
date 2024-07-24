@@ -7,7 +7,7 @@ import de.schwarzf.reichenau.codeAnalysis.VariableSymbol;
 import de.schwarzf.reichenau.codeAnalysis.syntax.SyntaxTree;
 import de.schwarzf.reichenau.codeAnalysis.syntax.SyntaxNode;
 import de.schwarzf.reichenau.codeAnalysis.syntax.SyntaxToken;
-import de.schwarzf.synthesis.JavaSynthesizer;
+import de.schwarzf.reichenau.codeSynthesis.JavaSynthesizer;
 
 import java.util.ArrayList;
 import java.util.HashMap;

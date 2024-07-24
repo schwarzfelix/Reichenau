@@ -1,4 +1,4 @@
-package de.schwarzf.synthesis;
+package de.schwarzf.reichenau.codeSynthesis;
 
 import de.schwarzf.reichenau.codeAnalysis.binding.BoundExpression;
 import de.schwarzf.reichenau.codeAnalysis.syntax.ExpressionSyntax;
