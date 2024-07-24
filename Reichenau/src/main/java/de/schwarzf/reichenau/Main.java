@@ -8,6 +8,8 @@ import de.schwarzf.reichenau.codeAnalysis.syntax.SyntaxTree;
 import de.schwarzf.reichenau.codeAnalysis.syntax.SyntaxNode;
 import de.schwarzf.reichenau.codeAnalysis.syntax.SyntaxToken;
 import de.schwarzf.reichenau.codeSynthesis.JavaSynthesizer;
+import de.schwarzf.reichenau.intermediateCode.IntermediateCodeGenerator;
+import de.schwarzf.reichenau.intermediateCode.IntermediateCodeNode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,13 +39,13 @@ public class Main {
 
         System.out.println("""
  
-░█▀▄░█▀▀░▀█▀░█▀▀░█░█░█▀▀░█▀█░█▀█░█░█
-░█▀▄░█▀▀░░█░░█░░░█▀█░█▀▀░█░█░█▀█░█░█
-░▀░▀░▀▀▀░▀▀▀░▀▀▀░▀░▀░▀▀▀░▀░▀░▀░▀░▀▀▀
+ ░█▀▄░█▀▀░▀█▀░█▀▀░█░█░█▀▀░█▀█░█▀█░█░█
+ ░█▀▄░█▀▀░░█░░█░░░█▀█░█▀▀░█░█░█▀█░█░█
+ ░▀░▀░▀▀▀░▀▀▀░▀▀▀░▀░▀░▀▀▀░▀░▀░▀░▀░▀▀▀
  Compiler by SchwarzF""");
 
         boolean showTree = false;
-        boolean synthesize = false;
+        boolean showIntermediateCode = false;
         HashMap<VariableSymbol, Object> variables = new HashMap<>();
 
         while (true) {
@@ -62,9 +64,9 @@ public class Main {
                 System.out.println("Show parse tree: " + showTree);
                 continue;
             }
-            else if (line.equals("#synth")) {
-                synthesize = !synthesize;
-                System.out.println("Synthesize: " + synthesize);
+            else if (line.equals("#imed")) {
+                showIntermediateCode = !showIntermediateCode;
+                System.out.println("Show intermediate code: " + showIntermediateCode);
                 continue;
             }
             else if (line.equals("#clear")) {
@@ -83,9 +85,15 @@ public class Main {
                 prettyPrint(syntaxTree.getRoot(), "", true);
             }
 
-            if (synthesize) {
-                JavaSynthesizer synthesizer = new JavaSynthesizer(syntaxTree);
-                System.out.println(synthesizer.synthesize());
+            if (showIntermediateCode) {
+                //JavaSynthesizer synthesizer = new JavaSynthesizer(syntaxTree);
+                //System.out.println(synthesizer.synthesize());
+
+                IntermediateCodeGenerator intermediateCodeGenerator = new IntermediateCodeGenerator(syntaxTree);
+                ArrayList<IntermediateCodeNode> intermediateCode = intermediateCodeGenerator.generateIntermediateCode();
+                for (IntermediateCodeNode node : intermediateCode) {
+                    System.out.println(node);
+                }
             }
 
             if (diagnostics.size() > 0) {
