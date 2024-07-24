@@ -13,6 +13,11 @@ public class StackMachine {
         stack = new Stack<>();
     }
 
+    public StackMachine(String input) {
+        this.input = IntermediateCodeParser.parse(input);
+        stack = new Stack<>();
+    }
+
     public void run() {
         while (!input.isEmpty()) {
             IntermediateCodeNode node = input.poll();

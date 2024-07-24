@@ -93,54 +93,64 @@ public class Main {
                 continue;
             }
 
-            SyntaxTree syntaxTree = SyntaxTree.parse(line);
-            Compilation compilation = new Compilation(syntaxTree);
-            EvaluationResult result = compilation.evaluate(variables);
+            if (!inputIntermediateCode) {
 
-            ArrayList<Diagnostic> diagnostics = result.getDiagnostics();
+                SyntaxTree syntaxTree = SyntaxTree.parse(line);
+                Compilation compilation = new Compilation(syntaxTree);
+                EvaluationResult result = compilation.evaluate(variables);
 
-            IntermediateCodeGenerator intermediateCodeGenerator = new IntermediateCodeGenerator(syntaxTree);
-            LinkedList<IntermediateCodeNode> intermediateCode = intermediateCodeGenerator.generateIntermediateCode();
+                ArrayList<Diagnostic> diagnostics = result.getDiagnostics();
 
-            if (showTree) {
-                prettyPrint(syntaxTree.getRoot(), "", true);
-            }
+                IntermediateCodeGenerator intermediateCodeGenerator = new IntermediateCodeGenerator(syntaxTree);
+                LinkedList<IntermediateCodeNode> intermediateCode = intermediateCodeGenerator.generateIntermediateCode();
 
-            if (showIntermediateCode) {
-
-                String intermediateCodeString = "";
-                for (IntermediateCodeNode node : intermediateCode) {
-                    intermediateCodeString += node.toString() + " ";
+                if (showTree) {
+                    prettyPrint(syntaxTree.getRoot(), "", true);
                 }
-                intermediateCodeString = intermediateCodeString.trim();
-                System.out.println(intermediateCodeString);
 
+                if (showIntermediateCode) {
+
+                    String intermediateCodeString = "";
+                    for (IntermediateCodeNode node : intermediateCode) {
+                        intermediateCodeString += node.toString() + " ";
+                    }
+                    intermediateCodeString = intermediateCodeString.trim();
+                    System.out.println(intermediateCodeString);
+
+                }
+
+                if (runStackMachine) {
+                    StackMachine stackMachine = new StackMachine(intermediateCode);
+                    stackMachine.run();
+                    System.out.println("= " + ANSI_BLACK + ANSI_GREEN_BACKGROUND + stackMachine.getResult() + ANSI_RESET);
+                }
+
+
+                if (diagnostics.size() > 0) {
+
+                    for (Diagnostic diagnostic : diagnostics) {
+
+                        String prefix = line.substring(0, diagnostic.getSpan().getStart());
+                        String error = line.substring(diagnostic.getSpan().getStart(), diagnostic.getSpan().getEnd());
+                        String suffix = line.substring(diagnostic.getSpan().getEnd());
+
+                        System.out.println(ANSI_BLACK + ANSI_RED_BACKGROUND + diagnostic.getMessage() + ANSI_RESET);
+                        System.out.println("    " + prefix + ANSI_RED + error + ANSI_RESET + suffix);
+
+                    }
+
+                }
+                else if (runEvaluator) {
+                    System.out.println("= " + ANSI_BLACK + ANSI_GREEN_BACKGROUND + result.getValue() + ANSI_RESET);
+                }
             }
+            else {
 
-            if (runStackMachine) {
-                StackMachine stackMachine = new StackMachine(intermediateCode);
+                StackMachine stackMachine = new StackMachine(line);
                 stackMachine.run();
-            }
-
-            // Code Analysis
-            if (diagnostics.size() > 0) {
-
-                for (Diagnostic diagnostic : diagnostics) {
-
-                    String prefix = line.substring(0, diagnostic.getSpan().getStart());
-                    String error = line.substring(diagnostic.getSpan().getStart(), diagnostic.getSpan().getEnd());
-                    String suffix = line.substring(diagnostic.getSpan().getEnd());
-
-                    System.out.println(ANSI_BLACK + ANSI_RED_BACKGROUND + diagnostic.getMessage() + ANSI_RESET);
-                    System.out.println("    " + prefix + ANSI_RED + error + ANSI_RESET + suffix);
-
-                }
+                System.out.println("= " + ANSI_BLACK + ANSI_GREEN_BACKGROUND + stackMachine.getResult() + ANSI_RESET);
 
             }
-            else if (runEvaluator) {
-                System.out.println("= " + ANSI_BLACK + ANSI_GREEN_BACKGROUND + result.getValue() + ANSI_RESET);
-            }
-
         }
     }
 
