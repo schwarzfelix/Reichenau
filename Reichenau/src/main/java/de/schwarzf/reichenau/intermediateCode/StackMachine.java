@@ -13,9 +13,10 @@ public class StackMachine {
         stack = new Stack<>();
     }
 
-    public void execute() {
+    public void run() {
         while (!input.isEmpty()) {
             IntermediateCodeNode node = input.poll();
+
             switch (node.getKind()) {
                 case IntermediateCodeNodeKind.OPERAND -> stack.push(((IntermediateCodeOperand)node).getValue());
                 case IntermediateCodeNodeKind.ADDITION -> stack.push((int)stack.pop() + (int)stack.pop());
@@ -27,6 +28,8 @@ public class StackMachine {
                 case IntermediateCodeNodeKind.EQUALS -> stack.push(stack.pop().equals(stack.pop()));
                 case IntermediateCodeNodeKind.NOT_EQUALS -> stack.push(!stack.pop().equals(stack.pop()));
             }
+
+            System.out.println("Stack after " + node.getKind() + ": " + stack);
         }
     }
 

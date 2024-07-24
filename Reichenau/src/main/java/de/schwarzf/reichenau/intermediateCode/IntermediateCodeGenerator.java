@@ -7,6 +7,7 @@ import de.schwarzf.reichenau.codeAnalysis.syntax.SyntaxTree;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 public class IntermediateCodeGenerator {
 
@@ -19,11 +20,11 @@ public class IntermediateCodeGenerator {
         rootBoundExpression = binder.bindExpression((ExpressionSyntax) syntaxTree.getRoot());
     }
 
-    public ArrayList<IntermediateCodeNode> generateIntermediateCode() {
+    public LinkedList<IntermediateCodeNode> generateIntermediateCode() {
         return generateExpression(rootBoundExpression);
     }
 
-    public ArrayList<IntermediateCodeNode> generateExpression(BoundExpression boundNode) {
+    public LinkedList<IntermediateCodeNode> generateExpression(BoundExpression boundNode) {
         return switch (boundNode.getKind()) {
             case LITERAL_EXPRESSION -> generateLiteralExpression((BoundLiteralExpression) boundNode);
             //case VARIABLE_EXPRESSION -> generateVariableExpression((BoundVariableExpression) node);
@@ -34,22 +35,22 @@ public class IntermediateCodeGenerator {
         };
     }
 
-    private ArrayList<IntermediateCodeNode> generateLiteralExpression(BoundLiteralExpression boundNode) {
-        ArrayList<IntermediateCodeNode> intermediateCodeNodes = new ArrayList<>();
-        intermediateCodeNodes.add(new IntermediateCodeOperand(boundNode.getValue().toString()));
+    private LinkedList<IntermediateCodeNode> generateLiteralExpression(BoundLiteralExpression boundNode) {
+        LinkedList<IntermediateCodeNode> intermediateCodeNodes = new LinkedList<>();
+        intermediateCodeNodes.add(new IntermediateCodeOperand(boundNode.getValue()));
         return intermediateCodeNodes;
     }
 
-    private ArrayList<IntermediateCodeNode> generateBinaryExpression(BoundBinaryExpression boundNode) {
-        ArrayList<IntermediateCodeNode> intermediateCodeNodes = new ArrayList<>();
+    private LinkedList<IntermediateCodeNode> generateBinaryExpression(BoundBinaryExpression boundNode) {
+        LinkedList<IntermediateCodeNode> intermediateCodeNodes = new LinkedList<>();
         intermediateCodeNodes.addAll(generateExpression(boundNode.getLeft()));
         intermediateCodeNodes.addAll(generateExpression(boundNode.getRight()));
         intermediateCodeNodes.add(new IntermediateCodeOperator(IntermediateCodeNode.getIntermediateCodeKind(boundNode.getOperator().getKind())));
         return intermediateCodeNodes;
     }
 
-    private ArrayList<IntermediateCodeNode> generateUnaryExpression(BoundUnaryExpression boundNode) {
-        ArrayList<IntermediateCodeNode> intermediateCodeNodes = new ArrayList<>();
+    private LinkedList<IntermediateCodeNode> generateUnaryExpression(BoundUnaryExpression boundNode) {
+        LinkedList<IntermediateCodeNode> intermediateCodeNodes = new LinkedList<>();
         intermediateCodeNodes.addAll(generateExpression(boundNode.getOperand()));
         intermediateCodeNodes.add(new IntermediateCodeOperator(IntermediateCodeNode.getIntermediateCodeKind(boundNode.getOperator().getKind())));
         return intermediateCodeNodes;

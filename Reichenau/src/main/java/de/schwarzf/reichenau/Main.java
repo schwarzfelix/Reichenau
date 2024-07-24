@@ -10,10 +10,9 @@ import de.schwarzf.reichenau.codeAnalysis.syntax.SyntaxToken;
 import de.schwarzf.reichenau.codeSynthesis.JavaSynthesizer;
 import de.schwarzf.reichenau.intermediateCode.IntermediateCodeGenerator;
 import de.schwarzf.reichenau.intermediateCode.IntermediateCodeNode;
+import de.schwarzf.reichenau.intermediateCode.StackMachine;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
@@ -46,6 +45,10 @@ public class Main {
 
         boolean showTree = false;
         boolean showIntermediateCode = false;
+        boolean runEvaluator = false;
+        boolean runStackMachine = false;
+        boolean inputIntermediateCode = false;
+
         HashMap<VariableSymbol, Object> variables = new HashMap<>();
 
         while (true) {
@@ -69,9 +72,24 @@ public class Main {
                 System.out.println("Show intermediate code: " + showIntermediateCode);
                 continue;
             }
+            else if (line.equals("#eval")) {
+                runEvaluator = !runEvaluator;
+                System.out.println("Run Evaluator: " + runEvaluator);
+                continue;
+            }
+            else if (line.equals("#stack")) {
+                runStackMachine = !runStackMachine;
+                System.out.println("Run StackMachine: " + runStackMachine);
+                continue;
+            }
             else if (line.equals("#clear")) {
                 System.out.print("\033[H\033[2J");
                 System.out.flush();
+                continue;
+            }
+            else if (line.equals("#input")) {
+                inputIntermediateCode = !inputIntermediateCode;
+                System.out.println("Input Intermediate Code and run StackMachine: " + inputIntermediateCode);
                 continue;
             }
 
@@ -81,21 +99,30 @@ public class Main {
 
             ArrayList<Diagnostic> diagnostics = result.getDiagnostics();
 
+            IntermediateCodeGenerator intermediateCodeGenerator = new IntermediateCodeGenerator(syntaxTree);
+            LinkedList<IntermediateCodeNode> intermediateCode = intermediateCodeGenerator.generateIntermediateCode();
+
             if (showTree) {
                 prettyPrint(syntaxTree.getRoot(), "", true);
             }
 
             if (showIntermediateCode) {
-                //JavaSynthesizer synthesizer = new JavaSynthesizer(syntaxTree);
-                //System.out.println(synthesizer.synthesize());
 
-                IntermediateCodeGenerator intermediateCodeGenerator = new IntermediateCodeGenerator(syntaxTree);
-                ArrayList<IntermediateCodeNode> intermediateCode = intermediateCodeGenerator.generateIntermediateCode();
+                String intermediateCodeString = "";
                 for (IntermediateCodeNode node : intermediateCode) {
-                    System.out.println(node);
+                    intermediateCodeString += node.toString() + " ";
                 }
+                intermediateCodeString = intermediateCodeString.trim();
+                System.out.println(intermediateCodeString);
+
             }
 
+            if (runStackMachine) {
+                StackMachine stackMachine = new StackMachine(intermediateCode);
+                stackMachine.run();
+            }
+
+            // Code Analysis
             if (diagnostics.size() > 0) {
 
                 for (Diagnostic diagnostic : diagnostics) {
@@ -110,7 +137,7 @@ public class Main {
                 }
 
             }
-            else {
+            else if (runEvaluator) {
                 System.out.println("= " + ANSI_BLACK + ANSI_GREEN_BACKGROUND + result.getValue() + ANSI_RESET);
             }
 
