@@ -22,16 +22,42 @@ public class StackMachine {
         while (!input.isEmpty()) {
             IntermediateCodeNode node = input.poll();
 
+            Object left = null;
+            Object right = null;
+
             switch (node.getKind()) {
-                case IntermediateCodeNodeKind.OPERAND -> stack.push(((IntermediateCodeOperand)node).getValue());
-                case IntermediateCodeNodeKind.ADDITION -> stack.push((int)stack.pop() + (int)stack.pop());
-                case IntermediateCodeNodeKind.SUBTRACTION -> stack.push((int)stack.pop() - (int)stack.pop());
-                case IntermediateCodeNodeKind.MULTIPLICATION -> stack.push((int)stack.pop() * (int)stack.pop());
-                case IntermediateCodeNodeKind.DIVISION -> stack.push((int)stack.pop() / (int)stack.pop());
-                case IntermediateCodeNodeKind.LOGICAL_AND -> stack.push((boolean)stack.pop() && (boolean)stack.pop());
-                case IntermediateCodeNodeKind.LOGICAL_OR -> stack.push((boolean)stack.pop() || (boolean)stack.pop());
-                case IntermediateCodeNodeKind.EQUALS -> stack.push(stack.pop().equals(stack.pop()));
-                case IntermediateCodeNodeKind.NOT_EQUALS -> stack.push(!stack.pop().equals(stack.pop()));
+                case ADDITION:
+                case SUBTRACTION:
+                case MULTIPLICATION:
+                case DIVISION:
+                case LOGICAL_AND:
+                case LOGICAL_OR:
+                case EQUALS:
+                case NOT_EQUALS:
+                    // Pop the operands in the correct order
+                    right = stack.pop();
+                    left = stack.pop();
+                    break;
+                case IDENTITY:
+                case NEGATION:
+                case LOGICAL_NEGATION:
+                    right = stack.pop();
+                    break;
+            }
+
+            switch (node.getKind()) {
+                case OPERAND -> stack.push(((IntermediateCodeOperand)node).getValue());
+                case ADDITION -> stack.push((int)left + (int)right);
+                case SUBTRACTION -> stack.push((int)left - (int)right);
+                case MULTIPLICATION -> stack.push((int)left * (int)right);
+                case DIVISION -> stack.push((int)left / (int)right);
+                case LOGICAL_AND -> stack.push((boolean)left && (boolean)right);
+                case LOGICAL_OR -> stack.push((boolean)left || (boolean)right);
+                case EQUALS -> stack.push(left.equals(right));
+                case NOT_EQUALS -> stack.push(!left.equals(right));
+                case IDENTITY -> stack.push((int)right);
+                case NEGATION -> stack.push(-(int)right);
+                case LOGICAL_NEGATION -> stack.push(!(boolean)right);
             }
 
             System.out.println("Stack after " + node.getKind() + ": " + stack);

@@ -101,28 +101,31 @@ public class Main {
 
                 ArrayList<Diagnostic> diagnostics = result.getDiagnostics();
 
-                IntermediateCodeGenerator intermediateCodeGenerator = new IntermediateCodeGenerator(syntaxTree);
-                LinkedList<IntermediateCodeNode> intermediateCode = intermediateCodeGenerator.generateIntermediateCode();
-
                 if (showTree) {
                     prettyPrint(syntaxTree.getRoot(), "", true);
                 }
 
-                if (showIntermediateCode) {
+                if (showIntermediateCode || runStackMachine) {
 
-                    String intermediateCodeString = "";
-                    for (IntermediateCodeNode node : intermediateCode) {
-                        intermediateCodeString += node.toString() + " ";
+                    IntermediateCodeGenerator intermediateCodeGenerator = new IntermediateCodeGenerator(syntaxTree);
+                    LinkedList<IntermediateCodeNode> intermediateCode = intermediateCodeGenerator.generateIntermediateCode();
+
+                    if (showIntermediateCode) {
+
+                        String intermediateCodeString = "";
+                        for (IntermediateCodeNode node : intermediateCode) {
+                            intermediateCodeString += node.toString() + " ";
+                        }
+                        intermediateCodeString = intermediateCodeString.trim();
+                        System.out.println(intermediateCodeString);
+
                     }
-                    intermediateCodeString = intermediateCodeString.trim();
-                    System.out.println(intermediateCodeString);
 
-                }
-
-                if (runStackMachine) {
-                    StackMachine stackMachine = new StackMachine(intermediateCode);
-                    stackMachine.run();
-                    System.out.println("= " + ANSI_BLACK + ANSI_GREEN_BACKGROUND + stackMachine.getResult() + ANSI_RESET);
+                    if (runStackMachine) {
+                        StackMachine stackMachine = new StackMachine(intermediateCode);
+                        stackMachine.run();
+                        System.out.println("= " + ANSI_BLACK + ANSI_GREEN_BACKGROUND + stackMachine.getResult() + ANSI_RESET);
+                    }
                 }
 
 
