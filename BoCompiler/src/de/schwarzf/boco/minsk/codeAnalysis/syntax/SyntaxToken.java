@@ -11,8 +11,8 @@ public final class SyntaxToken extends SyntaxNode{
     private int position;
     private String text;
 
-    private Integer value;
-    public SyntaxToken(SyntaxKind kind, int position, String text, Integer value){
+    private Object value;
+    public SyntaxToken(SyntaxKind kind, int position, String text, Object value){
         this.kind = kind;
         this.position = position;
         this.text = text;
@@ -36,7 +36,7 @@ public final class SyntaxToken extends SyntaxNode{
         return text;
     }
 
-    public Integer getValue() {
+    public Object getValue() {
         return value;
     }
 

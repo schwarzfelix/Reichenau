@@ -1,6 +1,5 @@
 package de.schwarzf.boco.minsk.codeAnalysis.syntax;
 
-import de.schwarzf.boco.minsk.codeAnalysis.Diagnostic;
 import de.schwarzf.boco.minsk.codeAnalysis.DiagnosticBag;
 
 import java.util.ArrayList;
@@ -8,8 +7,9 @@ import java.util.ArrayList;
 final class Parser {
 
     private SyntaxToken[] tokens;
+    private final DiagnosticBag diagnostics = new DiagnosticBag();
+
     private int position;
-    private DiagnosticBag diagnostics = new DiagnosticBag();
 
     public Parser(String text) {
         ArrayList<SyntaxToken> tokensList = new ArrayList<>();
@@ -120,22 +120,43 @@ final class Parser {
     private ExpressionSyntax parsePrimaryExpression() {
 
         switch (getCurrent().getKind()) {
+
             case OPEN_PARENTHESIS_TOKEN:
-                SyntaxToken left = getNextToken();
-                ExpressionSyntax expression = parseExpression();
-                SyntaxToken right = matchToken(SyntaxKind.CLOSE_PARENTHESIS_TOKEN);
-                return new ParenthesizedExpressionSyntax(left, expression, right);
+                return parseParenthesizedExpression();
             case FALSE_KEYWORD:
             case TRUE_KEYWORD:
-                SyntaxToken keywordToken = getNextToken();
-                boolean value = keywordToken.getKind() == SyntaxKind.TRUE_KEYWORD;
-                return new LiteralExpressionSyntax(keywordToken, value);
+                return parseBooleanLiteral();
+
+            case NUMBER_TOKEN:
+                return parseNumberLiteral();
+
             case IDENTIFIER_TOKEN:
-                SyntaxToken identifierToken = getNextToken();
-                return new NameExpressionSyntax(identifierToken);
             default:
-                SyntaxToken numberToken = matchToken(SyntaxKind.NUMBER_TOKEN);
-                return new LiteralExpressionSyntax(numberToken);
+                return parseNameExpression();
+
         }
+    }
+
+    private ParenthesizedExpressionSyntax parseParenthesizedExpression() {
+        SyntaxToken left = matchToken(SyntaxKind.OPEN_PARENTHESIS_TOKEN);
+        ExpressionSyntax expression = parseExpression();
+        SyntaxToken right = matchToken(SyntaxKind.CLOSE_PARENTHESIS_TOKEN);
+        return new ParenthesizedExpressionSyntax(left, expression, right);
+    }
+
+    private LiteralExpressionSyntax parseBooleanLiteral() {
+        boolean isTrue = getCurrent().getKind() == SyntaxKind.TRUE_KEYWORD;
+        SyntaxToken keywordToken = isTrue ? matchToken(SyntaxKind.TRUE_KEYWORD) : matchToken(SyntaxKind.FALSE_KEYWORD);
+        return new LiteralExpressionSyntax(keywordToken, isTrue);
+    }
+
+    private LiteralExpressionSyntax parseNumberLiteral() {
+        SyntaxToken numberToken = matchToken(SyntaxKind.NUMBER_TOKEN);
+        return new LiteralExpressionSyntax(numberToken);
+    }
+
+    private NameExpressionSyntax parseNameExpression() {
+        SyntaxToken identifierToken = matchToken(SyntaxKind.IDENTIFIER_TOKEN);
+        return new NameExpressionSyntax(identifierToken);
     }
 }
