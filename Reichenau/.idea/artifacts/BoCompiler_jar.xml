@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="BoCompiler:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/BoCompiler_jar</output-path>
-    <root id="archive" name="BoCompiler.jar">
-      <element id="module-output" name="Reichenau" />
-    </root>
-  </artifact>
-</component>
